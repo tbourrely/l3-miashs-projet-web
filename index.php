@@ -7,14 +7,16 @@
 
 
 /**
- * @TODO : Autoloader
  * @TODO : Template Engine
  * @TODO : ORM
  */
 
-require_once __DIR__ . '/src/Router/Router.php';
-require_once __DIR__ . '/src/Router/Route.php';
-require_once __DIR__ . '/src/Router/RouterException.php';
+//require_once __DIR__ . '/src/Router/Router.php';
+//require_once __DIR__ . '/src/Router/Route.php';
+//require_once __DIR__ . '/src/Router/RouterException.php';
+
+require __DIR__ . str_replace('/', DIRECTORY_SEPARATOR, '/src/Autoloader/Autoloader.php');
+\Pure\Autoloader\Autoloader::register();
 
 use Pure\Router\Router;
 
