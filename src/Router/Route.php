@@ -1,27 +1,66 @@
 <?php
 /**
  * File "Route.php"
+ *
  * @author Thomas Bourrely
  * 10/02/2018
  */
 
 namespace Pure\Router;
 
-
+/**
+ * Class Route
+ *
+ * @package Pure\Router
+ */
 class Route
 {
+    /**
+     * Route's path
+     *
+     * @var string
+     */
     private $path;
+
+    /**
+     * Route's callback
+     *
+     * @var callable
+     */
     private $callable;
+
+    /**
+     * Matched params
+     *
+     * @var array
+     */
     private $match_params = [];
+
+    /**
+     * Route's params regex
+     *
+     * @var array
+     */
     private $params_regex = [];
 
-
+    /**
+     * Route constructor.
+     *
+     * @param string $path
+     * @param callable $callable
+     */
     public function __construct($path, $callable)
     {
         $this->path = trim($path, '/');
         $this->callable = $callable;
     }
 
+    /**
+     * Find params
+     *
+     * @param string $url
+     * @return bool
+     */
     public function match($url)
     {
         $url = trim($url, '/');
@@ -38,6 +77,12 @@ class Route
         return true;
     }
 
+    /**
+     * Search for a regex for the current match
+     *
+     * @param string $match
+     * @return string
+     */
     private function paramMatch($match)
     {
         if ( isset($this->params_regex[$match[1]]) ) {
@@ -47,15 +92,43 @@ class Route
         return '([\w]+)';
     }
 
+    /**
+     * Call the route's callback
+     *
+     * @return mixed
+     */
     public function call()
     {
         return call_user_func_array($this->callable, $this->match_params);
     }
 
+    /**
+     * Specify the regex for a param
+     *
+     * @param string $param
+     * @param string $regex
+     * @return Route $this
+     */
     public function with($param, $regex)
     {
-        $this->params_regex[$param] = $regex;
+        $this->params_regex[$param] = str_replace('(', '(?:', $regex);
 
         return $this;
+    }
+
+    /**
+     * Builds the URL for the current route with the specified params
+     *
+     * @param array $params
+     * @return mixed|string
+     */
+    public function getUrl($params)
+    {
+        $path = $this->path;
+        foreach ($params as $key => $value) {
+            $path = str_replace(":$key", $value, $path);
+        }
+
+        return $path;
     }
 }
