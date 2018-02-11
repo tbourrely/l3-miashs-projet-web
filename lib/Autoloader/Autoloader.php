@@ -30,14 +30,20 @@ class Autoloader
      */
     static function autoload($class)
     {
+        $source_directories = array(
+            'lib'
+        );
 
         $file = str_replace(['\\', 'Pure/'], ['/', ''], $class);
 
-        if ( file_exists('src/' . $file . '.php') ) {
-            require_once 'src/' . $file . '.php';
 
-            if (class_exists($class)) {
-                return true;
+        foreach ( $source_directories as $source_dir ) {
+            if ( file_exists($source_dir . DIRECTORY_SEPARATOR . $file . '.php') ) {
+                require_once $source_dir . DIRECTORY_SEPARATOR . $file . '.php';
+
+                if (class_exists($class)) {
+                    return true;
+                }
             }
         }
 

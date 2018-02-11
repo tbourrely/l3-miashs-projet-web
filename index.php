@@ -7,20 +7,27 @@
 
 
 /**
- * @TODO : Template Engine
+ * @TODO : Template Engine : en cours
  * @TODO : ORM
  */
 
-//require_once __DIR__ . '/src/Router/Router.php';
-//require_once __DIR__ . '/src/Router/Route.php';
-//require_once __DIR__ . '/src/Router/RouterException.php';
-
-require __DIR__ . str_replace('/', DIRECTORY_SEPARATOR, '/src/Autoloader/Autoloader.php');
+require __DIR__ . str_replace('/', DIRECTORY_SEPARATOR, '/lib/Autoloader/Autoloader.php');
 \Pure\Autoloader\Autoloader::register();
 
 use Pure\Router\Router;
+use \Pure\TemplateEngine\Pure_Templates_Environment;
 
+/*
+ * Template Engine
+ */
+$ptpl = new Pure_Templates_Environment();
+$ptpl->setDirectory(__DIR__ . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'Templates');
+
+/*
+ * ROUTER
+ */
 $router = new Router($_GET['url']);
+
 
 $router->get('/', function() {
     echo "Bienvenue sur ma homepage !";
@@ -30,7 +37,20 @@ $router->get('/posts/:id', function($id) use ($router) {
     echo $router->url('posts.show', ['id' => 'monId']);
     echo '<br>';
     echo "Voila l'article $id";
-}, 'posts.show');
+}, 'posts.show')->with('id', '[0-9]+');
+
+$router->get('/posts/:name', function($name) use ($ptpl, $router) {
+
+    $template = $ptpl->load('post');
+    $arrayTest = array(
+        'val1',
+        'val2',
+        'val3'
+    );
+
+    $template->render(array('post' => $name, 'url' => $router->url('posts.showByName', ['name' => 'postNameTest']), 'myArray' => $arrayTest, 'testVal' => 0));
+
+}, 'posts.showByName')->with('name', '[^0-9]+');
 
 $router->get('/posts/:id-:slug', function($id, $slug) {
     echo "Article $slug : $id";
