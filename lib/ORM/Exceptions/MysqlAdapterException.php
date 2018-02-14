@@ -5,7 +5,7 @@
  * 13/02/2018
  */
 
-namespace Pure\ORM;
+namespace Pure\ORM\Exceptions;
 
 
 class MysqlAdapterException extends \Exception

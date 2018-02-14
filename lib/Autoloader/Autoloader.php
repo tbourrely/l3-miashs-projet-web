@@ -31,13 +31,17 @@ class Autoloader
     static function autoload($class)
     {
         $source_directories = array(
-            'lib'
+            'Pure'  => 'lib',
+            'App'   => 'src'
         );
 
-        $file = str_replace(['\\', 'Pure/'], ['/', ''], $class);
+        $type = explode('\\', $class)[0];
 
+        if ( isset($source_directories[$type]) ) {
 
-        foreach ( $source_directories as $source_dir ) {
+            $file = str_replace(['\\', 'Pure/', 'App/'], ['/', '', ''], $class);
+            $source_dir = $source_directories[$type];
+
             if ( file_exists($source_dir . DIRECTORY_SEPARATOR . $file . '.php') ) {
                 require_once $source_dir . DIRECTORY_SEPARATOR . $file . '.php';
 
@@ -45,6 +49,7 @@ class Autoloader
                     return true;
                 }
             }
+
         }
 
         return false;

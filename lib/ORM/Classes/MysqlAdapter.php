@@ -5,14 +5,16 @@
  * 13/02/2018
  */
 
-namespace Pure\ORM;
+namespace Pure\ORM\Classes;
+use Pure\ORM\Exceptions\MysqlAdapterException;
+use Pure\ORM\Interfaces\DatabaseAdapterInterface;
 
 /**
  * Class MysqlAdapter
  *
- * @package Pure\ORM
+ * @package Pure\ORM\Classes
  */
-class MysqlAdapter implements DatabaseAdapter
+class MysqlAdapter implements DatabaseAdapterInterface
 {
     /**
      * Database config
@@ -200,10 +202,10 @@ class MysqlAdapter implements DatabaseAdapter
     public function select($table, $where = "", $fields = "*", $order = "", $limit = null, $offset = null)
     {
         $query = "SELECT $fields FROM $table" .
-            (isset($where) ? ' WHERE ' . $where : '') .
+            (!empty($where) ? ' WHERE ' . $where : '') .
             (isset($limit) ? ' LIMIT ' . $limit : '') .
-            (isset($offset) && isset($limit) ? ' OFFSET ' . $offset : '') .
-            (isset($order) ? ' ODER BY ' . $order : '');
+            ((isset($offset) && isset($limit)) ? ' OFFSET ' . $offset : '') .
+            (!empty($order) ? ' ODER BY ' . $order : '');
 
         $this->query($query);
 

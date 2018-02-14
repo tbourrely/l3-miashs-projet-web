@@ -5,38 +5,37 @@
  * 13/02/2018
  */
 
-namespace Pure\ORM;
+namespace Pure\ORM\AbstractClasses;
 
-
+/**
+ * Class AbstractProxy
+ *
+ * @package Pure\ORM\AbstractClasses
+ */
 abstract class AbstractProxy
 {
+    /**
+     * @var AbstractMapper
+     */
     protected $_mapper;
-    protected $_params;
 
-    public function __construct(AbstractMapper $mapper, $params)
+    /**
+     * AbstractProxy constructor.
+     *
+     * @param AbstractMapper $mapper
+     */
+    public function __construct(AbstractMapper $mapper)
     {
-        if (empty($params)) {
-            throw new \InvalidArgumentException('Mapper parameters cannot be empty');
-        }
-
         $this->_mapper = $mapper;
-        $this->_params = $params;
     }
 
     /**
+     * Getter for the mapper
+     *
      * @return mixed
      */
     public function getMapper()
     {
         return $this->_mapper;
     }
-
-    /**
-     * @return mixed
-     */
-    public function getParams()
-    {
-        return $this->_params;
-    }
-
 }

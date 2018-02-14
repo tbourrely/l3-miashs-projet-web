@@ -5,8 +5,10 @@
  * @author Thomas Bourrely
  * 13/02/2018
  */
-class ClientEntity extends \Pure\ORM\AbstractEntity
+namespace App\Entity;
+
+class ClientEntity extends \Pure\ORM\AbstractClasses\AbstractEntity
 {
-    protected $_primaryKey = 'id';
+    public static $_primaryKey = 'id';
     protected $_allowedFields = array('id', 'nom', 'prenom');
 }

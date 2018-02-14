@@ -5,7 +5,9 @@
  * 13/02/2018
  */
 
-namespace Pure\ORM;
+namespace Pure\ORM\Classes;
+use Pure\ORM\Interfaces\CollectionInterface;
+use Pure\ORM\AbstractClasses\AbstractEntity;
 
 class EntityCollection implements CollectionInterface
 {

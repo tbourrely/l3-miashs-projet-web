@@ -5,22 +5,56 @@
  * 13/02/2018
  */
 
-namespace Pure\ORM;
+namespace Pure\ORM\AbstractClasses;
+use Pure\ORM\Classes\EntityProxy;
 
-
+/**
+ * Class AbstractEntity
+ *
+ * @package Pure\ORM\AbstractClasses
+ */
 abstract class AbstractEntity
 {
-    protected $_primaryKey;
+    /**
+     * primary key used in DB
+     *
+     * @var string
+     */
+    public static $_primaryKey;
+
+    /**
+     * Columns from DB (depending of allowedFields)
+     *
+     * @var array
+     */
     protected $_values = array();
+
+    /**
+     * Allowed DB fields
+     *
+     * @var array
+     */
     protected $_allowedFields = array();
 
+    /**
+     * AbstractEntity constructor.
+     *
+     * @param array $fields
+     */
     public function __construct(array $fields)
     {
         foreach ($fields as $name => $value) {
             $this->$name = $value;
+            $this->_values[$name] = $value;
         }
     }
 
+    /**
+     * Set field's value
+     *
+     * @param $name
+     * @param $value
+     */
     public function _set($name, $value)
     {
         $this->_inAllowedFields($name);
@@ -30,9 +64,16 @@ abstract class AbstractEntity
             $this->$mutator($value);
         } else {
             $this->_values[$name] = $value;
+            $this->$name = $value;
         }
     }
 
+    /**
+     * Get field's value
+     *
+     * @param $name
+     * @return mixed|AbstractEntity
+     */
     public function _get($name)
     {
         $this->_inAllowedFields($name);
@@ -54,6 +95,12 @@ abstract class AbstractEntity
         return $field;
     }
 
+    /**
+     * Is field's value set
+     *
+     * @param $name
+     * @return bool
+     */
     public function _isset($name)
     {
         $this->_inAllowedFields($name);
@@ -61,6 +108,12 @@ abstract class AbstractEntity
         return isset($this->_values[$name]);
     }
 
+    /**
+     * Unset field
+     *
+     * @param $name
+     * @return bool
+     */
     public function _unset($name)
     {
         $this->_inAllowedFields($name);
@@ -74,7 +127,11 @@ abstract class AbstractEntity
         return false;
     }
 
-
+    /**
+     * Test if field is allowed
+     *
+     * @param $name
+     */
     protected function _inAllowedFields($name)
     {
         if (!in_array($name, $this->_allowedFields)) {
@@ -82,18 +139,33 @@ abstract class AbstractEntity
         }
     }
 
+    /**
+     * Transform entry into an array
+     *
+     * @return array
+     */
     public function toArray()
     {
         return $this->_values;
     }
 
+    /**
+     * Return entry id value
+     *
+     * @return mixed|AbstractEntity
+     */
     public function getId()
     {
-        return $this->_get($this->_primaryKey);
+        return $this->_get(self::$_primaryKey);
     }
 
-    public function getIdFieldName()
+    /**
+     * Return entry primary key name
+     *
+     * @return string
+     */
+    public function getPrimaryKey()
     {
-        return $this->_primaryKey;
+        return self::$_primaryKey;
     }
 }

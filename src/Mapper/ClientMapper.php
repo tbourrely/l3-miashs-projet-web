@@ -5,10 +5,14 @@
  * @author Thomas Bourrely
  * 13/02/2018
  */
-class ClientMapper extends \Pure\ORM\AbstractMapper
+namespace App\Mapper;
+
+use App\Entity\ClientEntity;
+
+class ClientMapper extends \Pure\ORM\AbstractClasses\AbstractMapper
 {
     protected $_entityTable = 'Client';
-    protected $_entityClass = 'ClientEntity';
+    protected $_entityClass = '\App\Entity\ClientEntity';
 
     protected function _createEntity(array $data)
     {
