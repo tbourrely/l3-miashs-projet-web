@@ -7,7 +7,7 @@
 
 
 /**
- * @TODO : ORM
+ * @TODO : ORM -> one-to-many
  */
 
 require __DIR__ . str_replace('/', DIRECTORY_SEPARATOR, '/lib/Autoloader/Autoloader.php');
@@ -77,5 +77,18 @@ $router->get('/client', function() {
     }
 });
 
+$router->get('/produits', function() {
+    $db_ini = __DIR__ . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'conf' . DIRECTORY_SEPARATOR . 'db.conf.ini';
+    $mysqlAdapter = new \Pure\ORM\Classes\MysqlAdapter($db_ini);
+    $clientMapper = new \App\Mapper\ClientMapper($mysqlAdapter);
+    $produitMapper = new \App\Mapper\ProduitMapper($mysqlAdapter, $clientMapper);
+
+    $produit = $produitMapper->findById(1);
+
+    echo "<h1>$produit->nom</h1>";
+    echo "<h2>prix : $produit->prix €</h2>";
+    echo "<h2>Client : " . $produit->client->nom . " " . $produit->client->prenom . "</h2>";
+
+});
 
 $router->run();

@@ -44,6 +44,10 @@ abstract class AbstractEntity
     public function __construct(array $fields)
     {
         foreach ($fields as $name => $value) {
+            if ($value instanceof AbstractProxy) {
+                $value = $value->load();
+            }
+
             $this->$name = $value;
             $this->_values[$name] = $value;
         }
@@ -88,7 +92,7 @@ abstract class AbstractEntity
         }
 
         $field = $this->_values[$name];
-        if ($field instanceof EntityProxy) {
+        if ($field instanceof AbstractProxy) {
             $field = $field->load();
         }
 

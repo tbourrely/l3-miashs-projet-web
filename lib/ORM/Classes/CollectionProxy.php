@@ -7,14 +7,14 @@
 
 namespace Pure\ORM\Classes;
 use Pure\ORM\AbstractClasses\AbstractProxy;
-use Pure\ORM\Interfaces\ProxyInterface;
+
 
 /**
  * Class CollectionProxy
  *
  * @package Pure\ORM\Classes
  */
-class CollectionProxy extends AbstractProxy implements ProxyInterface, \Countable, \IteratorAggregate
+class CollectionProxy extends AbstractProxy implements \Countable, \IteratorAggregate
 {
     /**
      * @var EntityCollection
