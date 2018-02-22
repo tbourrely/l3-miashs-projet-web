@@ -6,24 +6,44 @@
  */
 
 namespace Pure\ORM\Classes;
+
 use Pure\ORM\AbstractClasses\AbstractModel;
 use Pure\ORM\Interfaces\CollectionInterface;
 
+/**
+ * Class EntityCollection
+ *
+ * @package Pure\ORM\Classes
+ */
 class EntityCollection implements CollectionInterface
 {
+    /**
+     * @var array
+     */
     protected $_entities = array();
 
+    /**
+     * EntityCollection constructor.
+     *
+     * @param array $entities
+     */
     public function __construct(array $entities = array())
     {
         $this->_entities = $entities;
         $this->reset();
     }
 
+    /**
+     * @return array
+     */
     public function all()
     {
         return $this->_entities;
     }
 
+    /**
+     * @return mixed|null
+     */
     public function first()
     {
         if (empty($this->_entities)) {
@@ -33,56 +53,98 @@ class EntityCollection implements CollectionInterface
         return $this->_entities[0];
     }
 
+    /**
+     * clear entries
+     */
     public function clear()
     {
         $this->_entities = array();
     }
 
+    /**
+     * reset array cursor
+     */
     public function reset()
     {
         reset($this->_entities);
     }
 
+    /**
+     * @param $key
+     * @param AbstractModel $entity
+     * @return bool
+     */
     public function add($key, AbstractModel $entity)
     {
         return $this->offsetSet($key, $entity);
     }
 
+    /**
+     * @param $key
+     * @return mixed|null
+     */
     public function get($key)
     {
         return $this->offsetGet($key);
     }
 
+    /**
+     * @param $key
+     * @return bool
+     */
     public function remove($key)
     {
         return $this->offsetUnset($key);
     }
 
+    /**
+     * @param $key
+     * @return bool
+     */
     public function exists($key)
     {
         return $this->offsetExists($key);
     }
 
+    /**
+     * @return int
+     */
     public function count()
     {
         return count($this->_entities);
     }
 
+    /**
+     * @return \ArrayIterator
+     */
     public function getIterator()
     {
-        return new \ArrayIterator($this->toArray());
+        return new \ArrayIterator($this->all());
     }
 
+    /**
+     * @param mixed $offset
+     * @return bool
+     */
     public function offsetExists($offset)
     {
         return isset($this->_entities[$offset]);
     }
 
+    /**
+     * @param mixed $offset
+     * @return mixed|null
+     */
     public function offsetGet($offset)
     {
         return isset($this->_entities[$offset]) ? $this->_entities[$offset] : null;
     }
 
+    /**
+     * @param mixed $offset
+     * @param mixed $value
+     * @return bool
+     */
     public function offsetSet($offset, $value)
     {
         if (!$value instanceof AbstractModel) {
@@ -98,6 +160,10 @@ class EntityCollection implements CollectionInterface
         return true;
     }
 
+    /**
+     * @param mixed $offset
+     * @return bool
+     */
     public function offsetUnset($offset)
     {
         if ($offset instanceof AbstractModel) {

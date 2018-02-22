@@ -19,20 +19,21 @@
 
 
 /**
+ * Current :
  * @TODO : DB as global propre
  *
+ * Next 1 :
  * # Relations :
  * @TODO : One To One
  * @TODO : One To Many
  * @TODO : One To Many (Inverse)
  * @TODO : Many To Many
  *
- *
  * # a verifier si existe encore apres refacto
  * @TODO : probleme boucle infinie quand deux entity on un proxy
  *
  *
- * # Next
+ * # Next 2 :
  * @TODO : Middleware system
  */
 
