@@ -6,7 +6,6 @@
  */
 
 namespace Pure\ORM\AbstractClasses;
-use Pure\ORM\Classes\EntityProxy;
 
 /**
  * Class AbstractEntity

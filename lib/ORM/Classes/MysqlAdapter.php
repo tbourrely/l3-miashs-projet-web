@@ -242,7 +242,7 @@ class MysqlAdapter implements DatabaseAdapterInterface
     public function fetch()
     {
         if (isset($this->_result)) {
-            if ( ($row = $this->_result->fetch_array()) === false ) {
+            if ( ($row = $this->_result->fetch_array()) === NULL ) {
                 $this->freeResult();
             }
 

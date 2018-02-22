@@ -17,24 +17,13 @@ class ProduitMapper extends \Pure\ORM\AbstractClasses\AbstractMapper
     protected $_entityClass = '\App\Entity\ProduitEntity';
     protected $_clientMapper;
 
-    public function __construct(DatabaseAdapterInterface $adapter, ClientMapper $clientMapper)
-    {
-        $this->_clientMapper = $clientMapper;
-        parent::__construct($adapter);
-    }
-
-    public function getClientMapper()
-    {
-        return $this->_clientMapper;
-    }
-
     protected function _createEntity(array $data)
     {
         $produit = new $this->_entityClass(array(
             'id' => $data['id'],
             'nom' => $data['nom'],
             'prix' => $data['prix'],
-            'client' => new EntityProxy($this->_clientMapper, $data['idClient'])
+//            'client' => new EntityProxy($this->_clientMapper, ['id' => $data['idClient']])
         ));
 
         return $produit;

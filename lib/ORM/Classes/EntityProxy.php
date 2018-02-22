@@ -29,7 +29,9 @@ class EntityProxy extends AbstractProxy
     public function load()
     {
         if (!isset($this->_entity)) {
-            $this->_entity = $this->getMapper()->findById($this->getParams());
+
+            $criteria = $this->buildCriteria();
+            $this->_entity = $this->getMapper()->find($criteria);
 
             if (!$this->_entity instanceof AbstractEntity) {
                 throw new \RuntimeException('Unable to load the related entity');

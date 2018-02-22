@@ -7,7 +7,7 @@
 
 
 /**
- * @TODO : ORM -> one-to-many
+ * @TODO : probleme boucle infinie quand deux entity on un proxy
  */
 
 require __DIR__ . str_replace('/', DIRECTORY_SEPARATOR, '/lib/Autoloader/Autoloader.php');
@@ -21,6 +21,14 @@ use \Pure\TemplateEngine\Pure_Templates_Environment;
  */
 $ptpl = new Pure_Templates_Environment();
 $ptpl->setDirectory(__DIR__ . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'Templates');
+
+
+/*
+ * BDD
+ */
+$db_ini = __DIR__ . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'conf' . DIRECTORY_SEPARATOR . 'db.conf.ini';
+$mysqlAdapter = new \Pure\ORM\Classes\MysqlAdapter($db_ini);
+
 
 /*
  * ROUTER
@@ -55,9 +63,7 @@ $router->get('/posts/:id-:slug', function($id, $slug) {
     echo "Article $slug : $id";
 })->with('id', '[0-9]+')->with('slug', '[a-z\-0-9]+');
 
-$router->get('/client', function() {
-    $db_ini = __DIR__ . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'conf' . DIRECTORY_SEPARATOR . 'db.conf.ini';
-    $mysqlAdapter = new \Pure\ORM\Classes\MysqlAdapter($db_ini);
+$router->get('/client', function() use($mysqlAdapter) {
     $clientMapper = new \App\Mapper\ClientMapper($mysqlAdapter);
 
     $client = $clientMapper->findById(1);
@@ -77,18 +83,30 @@ $router->get('/client', function() {
     }
 });
 
-$router->get('/produits', function() {
-    $db_ini = __DIR__ . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'conf' . DIRECTORY_SEPARATOR . 'db.conf.ini';
-    $mysqlAdapter = new \Pure\ORM\Classes\MysqlAdapter($db_ini);
+$router->get('/produits/:id', function($id) use ($mysqlAdapter) {
     $clientMapper = new \App\Mapper\ClientMapper($mysqlAdapter);
     $produitMapper = new \App\Mapper\ProduitMapper($mysqlAdapter, $clientMapper);
 
-    $produit = $produitMapper->findById(1);
+    $produit = $produitMapper->findById($id);
 
     echo "<h1>$produit->nom</h1>";
     echo "<h2>prix : $produit->prix €</h2>";
     echo "<h2>Client : " . $produit->client->nom . " " . $produit->client->prenom . "</h2>";
 
+});
+
+$router->get('/produits/clt/:id', function($id) use($mysqlAdapter) {
+    $clientMapper = new \App\Mapper\ClientMapper($mysqlAdapter);
+    $produitMapper = new \App\Mapper\ProduitMapper($mysqlAdapter);
+
+    $clientMapper->setMapper('_productMapper', $produitMapper);
+    $produitMapper->setMapper('_clientMapper', $clientMapper);
+
+    $client = $clientMapper->findById($id);
+
+    foreach ($client->produits->getIterator() as $produit) {
+        var_dump($produit->nom);
+    }
 });
 
 $router->run();

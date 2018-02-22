@@ -37,7 +37,9 @@ class CollectionProxy extends AbstractProxy implements \Countable, \IteratorAggr
     public function load()
     {
         if (!isset($this->_collection)) {
-            $this->_collection = $this->_mapper->find();
+
+            $criteria = $this->buildCriteria();
+            $this->_collection = $this->getMapper()->find($criteria);
 
             if (!$this->_collection instanceof EntityCollection) {
                 throw new \RuntimeException('Unable to load the related collection');

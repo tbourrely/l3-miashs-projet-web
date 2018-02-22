@@ -228,6 +228,28 @@ abstract class AbstractMapper implements MapperInterface
     }
 
     /**
+     * Mapper setter, used for relationships (one-to-many, one-to-one, ...)
+     *
+     * @param $mapperName
+     * @param $mapper
+     */
+    public function setMapper($mapperName, $mapper)
+    {
+        $this->$mapperName = $mapper;
+    }
+
+    /**
+     * Getter for a mapper
+     *
+     * @param $mapperName
+     * @return mixed
+     */
+    public function getMapper($mapperName)
+    {
+        return $this->$mapperName;
+    }
+
+    /**
      * Create entity
      *
      * @param array $data
