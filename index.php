@@ -7,9 +7,15 @@
 
 
 /*
+ * # Docs
+ *
  * Eloquent doc
  * https://laravel.com/docs/5.6/eloquent-relationships
+ *
+ * Projet giftbox (exemple model)
+ * https://github.com/tbourrely/giftbox/blob/master/src/giftbox/models/Categorie.php
  */
+
 
 
 /**
@@ -22,10 +28,12 @@
  * @TODO : Many To Many
  *
  *
- *
- *
  * # a verifier si existe encore apres refacto
  * @TODO : probleme boucle infinie quand deux entity on un proxy
+ *
+ *
+ * # Next
+ * @TODO : Middleware system
  */
 
 require __DIR__ . str_replace('/', DIRECTORY_SEPARATOR, '/lib/Autoloader/Autoloader.php');
@@ -58,7 +66,22 @@ $router->get('/', function() {
     echo "Bienvenue sur ma homepage !";
 });
 
-$router->get('/posts/:id', function($id) use ($router) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+// # OLD TESTS
+
+/*$router->get('/posts/:id', function($id) use ($router) {
     echo $router->url('posts.show', ['id' => 'monId']);
     echo '<br>';
     echo "Voila l'article $id";
@@ -79,9 +102,9 @@ $router->get('/posts/:name', function($name) use ($ptpl, $router) {
 
 $router->get('/posts/:id-:slug', function($id, $slug) {
     echo "Article $slug : $id";
-})->with('id', '[0-9]+')->with('slug', '[a-z\-0-9]+');
+})->with('id', '[0-9]+')->with('slug', '[a-z\-0-9]+');*/
 
-$router->get('/client', function() use($mysqlAdapter) {
+/*$router->get('/client', function() use($mysqlAdapter) {
     $clientMapper = new \App\Mapper\ClientMapper($mysqlAdapter);
 
     $client = $clientMapper->findById(1);
@@ -99,9 +122,9 @@ $router->get('/client', function() use($mysqlAdapter) {
     } else {
         var_dump('error getting client collection');
     }
-});
+});*/
 
-$router->get('/produits/:id', function($id) use ($mysqlAdapter) {
+/*$router->get('/produits/:id', function($id) use ($mysqlAdapter) {
     $clientMapper = new \App\Mapper\ClientMapper($mysqlAdapter);
     $produitMapper = new \App\Mapper\ProduitMapper($mysqlAdapter, $clientMapper);
 
@@ -111,9 +134,9 @@ $router->get('/produits/:id', function($id) use ($mysqlAdapter) {
     echo "<h2>prix : $produit->prix €</h2>";
     echo "<h2>Client : " . $produit->client->nom . " " . $produit->client->prenom . "</h2>";
 
-});
+});*/
 
-$router->get('/produits/clt/:id', function($id) use($mysqlAdapter) {
+/*$router->get('/produits/clt/:id', function($id) use($mysqlAdapter) {
     $clientMapper = new \App\Mapper\ClientMapper($mysqlAdapter);
     $produitMapper = new \App\Mapper\ProduitMapper($mysqlAdapter);
 
@@ -125,6 +148,6 @@ $router->get('/produits/clt/:id', function($id) use($mysqlAdapter) {
     foreach ($client->produits->getIterator() as $produit) {
         var_dump($produit->nom);
     }
-});
+});*/
 
 $router->run();
