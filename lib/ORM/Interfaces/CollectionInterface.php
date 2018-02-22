@@ -16,11 +16,18 @@ use Pure\ORM\AbstractClasses\AbstractModel;
 interface CollectionInterface extends \Countable, \IteratorAggregate, \ArrayAccess
 {
     /**
-     * Transform collection to an array of entry
+     * Return all the elements of the collection as an array
+     *
+     * @return array
+     */
+    public function all();
+
+    /**
+     * Return the first element of the collection
      *
      * @return mixed
      */
-    public function toArray();
+    public function first();
 
     /**
      * Clear entries

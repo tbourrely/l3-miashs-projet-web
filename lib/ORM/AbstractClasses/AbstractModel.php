@@ -10,11 +10,6 @@ namespace Pure\ORM\AbstractClasses;
 use Pure\ORM\Classes\EntityCollection;
 use Pure\ORM\Interfaces\DatabaseAdapterInterface;
 
-
-/**
- * @TODO : all() && first()
- */
-
 /**
  * Class Model
  *
@@ -98,7 +93,7 @@ abstract class AbstractModel
 
 
     /********************************************************
-     * CRUD operations
+     * CRUD OPERATIONS
      ********************************************************/
 
 
@@ -163,8 +158,20 @@ abstract class AbstractModel
     }
 
 
+    /********************************************************
+     * OTHER OPERATIONS
+     ********************************************************/
 
-
+    /**
+     * Return all the elements of the table
+     *
+     * @return array
+     */
+    public static function all()
+    {
+        $collection = static::where();
+        return $collection->all();
+    }
 
 
     /********************************************************

@@ -19,9 +19,18 @@ class EntityCollection implements CollectionInterface
         $this->reset();
     }
 
-    public function toArray()
+    public function all()
     {
         return $this->_entities;
+    }
+
+    public function first()
+    {
+        if (empty($this->_entities)) {
+            return null;
+        }
+
+        return $this->_entities[0];
     }
 
     public function clear()

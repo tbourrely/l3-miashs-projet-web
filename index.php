@@ -19,7 +19,7 @@
 
 
 /**
- * @TODO : remplacer mapper + entity par juste un model
+ * @TODO : DB as global propre
  *
  * # Relations :
  * @TODO : One To One
@@ -72,8 +72,17 @@ $router->get('/clients', function() use($mysqlAdapter) {
     \Pure\ORM\AbstractClasses\AbstractModel::setAdapter($mysqlAdapter);
 
     // test get all : OK
-    $clients = \App\Model\Client::where('');
-    var_dump($clients->count());
+    /*$clients = \App\Model\Client::all();
+    var_dump(count($clients));*/
+
+    // test where : OK
+    /*$clients = \App\Model\Client::where("nom LIKE 'B%'");
+    var_dump(count($clients));*/
+
+    // test first : OK
+    /*$clients = \App\Model\Client::where("nom LIKE 'B%'")->first();
+    var_dump(count($clients->nom));*/
+
 
     // test insert : OK
     /*$clt->prenom = 'jeanTest';
