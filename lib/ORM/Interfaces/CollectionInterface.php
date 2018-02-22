@@ -6,7 +6,7 @@
  */
 
 namespace Pure\ORM\Interfaces;
-use Pure\ORM\AbstractClasses\AbstractEntity;
+use Pure\ORM\AbstractClasses\AbstractModel;
 
 /**
  * Interface CollectionInterface
@@ -40,10 +40,10 @@ interface CollectionInterface extends \Countable, \IteratorAggregate, \ArrayAcce
      * Add an entry
      *
      * @param $key
-     * @param AbstractEntity $entity
+     * @param AbstractModel $entity
      * @return mixed
      */
-    public function add($key, AbstractEntity $entity);
+    public function add($key, AbstractModel $entity);
 
     /**
      * Return an entry

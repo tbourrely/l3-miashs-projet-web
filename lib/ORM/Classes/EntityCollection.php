@@ -6,8 +6,8 @@
  */
 
 namespace Pure\ORM\Classes;
+use Pure\ORM\AbstractClasses\AbstractModel;
 use Pure\ORM\Interfaces\CollectionInterface;
-use Pure\ORM\AbstractClasses\AbstractEntity;
 
 class EntityCollection implements CollectionInterface
 {
@@ -34,7 +34,7 @@ class EntityCollection implements CollectionInterface
         reset($this->_entities);
     }
 
-    public function add($key, AbstractEntity $entity)
+    public function add($key, AbstractModel $entity)
     {
         return $this->offsetSet($key, $entity);
     }
@@ -76,7 +76,7 @@ class EntityCollection implements CollectionInterface
 
     public function offsetSet($offset, $value)
     {
-        if (!$value instanceof AbstractEntity) {
+        if (!$value instanceof AbstractModel) {
             throw new \InvalidArgumentException('Entity must be an instance of AbstractEntity');
         }
 
@@ -91,7 +91,7 @@ class EntityCollection implements CollectionInterface
 
     public function offsetUnset($offset)
     {
-        if ($offset instanceof AbstractEntity) {
+        if ($offset instanceof AbstractModel) {
             $this->_entities = array_filter($this->_entities, function($v) use ($offset) {
                 return $v !== $offset;
             });

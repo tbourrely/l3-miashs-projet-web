@@ -68,7 +68,25 @@ $router->get('/', function() {
 
 
 
+$router->get('/clients', function() use($mysqlAdapter) {
+    \Pure\ORM\AbstractClasses\AbstractModel::setAdapter($mysqlAdapter);
 
+    // test get all : OK
+    $clients = \App\Model\Client::where('');
+    var_dump($clients->count());
+
+    // test insert : OK
+    /*$clt->prenom = 'jeanTest';
+    $clt->nom = 'insertTest';
+    \App\Model\Client::insert($clt);*/
+
+    // test update : OK
+    /*$clt->prenom = 'TotoUpdate';
+    \App\Model\Client::update($clt);*/
+
+    // test delete : OK
+    /*\App\Model\Client::delete($clt);*/
+});
 
 
 

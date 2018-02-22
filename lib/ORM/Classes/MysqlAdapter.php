@@ -147,7 +147,7 @@ class MysqlAdapter implements DatabaseAdapterInterface
             $set[] = $field . '=' . $this->quoteValue($value);
         }
 
-        $query = "UPDATE $table SET " . implode(',', $set) . ((!empty($where)) ? 'WHERE ' . $where : '') . ";";
+        $query = "UPDATE $table SET " . implode(',', $set) . ((!empty($where)) ? ' WHERE ' . $where : '') . ";";
 
         $this->query($query);
 
@@ -182,7 +182,8 @@ class MysqlAdapter implements DatabaseAdapterInterface
      */
     public function delete($table, $where = "")
     {
-        $query = "DELETE FROM $table" . (isset($where)? ' WHERE ' . $where : '');
+        $query = "DELETE FROM $table" . (isset($where)? ' WHERE ' . $where : '') . ';';
+
         $this->query($query);
 
         return $this->affectedRows();
@@ -242,7 +243,7 @@ class MysqlAdapter implements DatabaseAdapterInterface
     public function fetch()
     {
         if (isset($this->_result)) {
-            if ( ($row = $this->_result->fetch_array()) === NULL ) {
+            if ( ($row = $this->_result->fetch_assoc()) === NULL ) {
                 $this->freeResult();
             }
 
