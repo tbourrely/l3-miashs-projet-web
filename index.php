@@ -6,7 +6,25 @@
  */
 
 
+/*
+ * Eloquent doc
+ * https://laravel.com/docs/5.6/eloquent-relationships
+ */
+
+
 /**
+ * @TODO : remplacer mapper + entity par juste un model
+ *
+ * # Relations :
+ * @TODO : One To One
+ * @TODO : One To Many
+ * @TODO : One To Many (Inverse)
+ * @TODO : Many To Many
+ *
+ *
+ *
+ *
+ * # a verifier si existe encore apres refacto
  * @TODO : probleme boucle infinie quand deux entity on un proxy
  */
 
