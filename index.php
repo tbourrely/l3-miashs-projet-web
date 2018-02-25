@@ -21,10 +21,6 @@
 /**
  *
  * Current :
- * @TODO : PHPUnit
- *
- *
- * Next 1 :
  * # Relations :
  * @TODO : One To One
  * @TODO : One To Many
