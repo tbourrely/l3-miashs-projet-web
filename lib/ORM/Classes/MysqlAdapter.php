@@ -6,7 +6,7 @@
  */
 
 namespace Pure\ORM\Classes;
-use Pure\ORM\AbstractClasses\AbstractModel;
+
 use Pure\ORM\Exceptions\MysqlAdapterException;
 use Pure\ORM\Interfaces\DatabaseAdapterInterface;
 
@@ -32,14 +32,6 @@ class MysqlAdapter implements DatabaseAdapterInterface
     protected $_result;
 
     /**
-     * MysqlAdapter constructor.
-     */
-    public function __construct()
-    {
-        // nothing to do here for now
-    }
-
-    /**
      * Disconnect DB on class destruction
      */
     public function __destruct()
@@ -51,8 +43,7 @@ class MysqlAdapter implements DatabaseAdapterInterface
      * Connect to DB
      *
      * @param array $config
-     * @return bool|\mysqli|null
-     * @throws MysqlAdapterException
+     * @return bool|\mysqli
      */
     public function connect(array $config)
     {
@@ -67,8 +58,8 @@ class MysqlAdapter implements DatabaseAdapterInterface
                     $config['dbname']
                 );
 
-                if ($this->_link->connect_error) {
-                    throw new MysqlAdapterException('Connection to db impossible');
+                if (!$this->_link->connect_error) {
+                    return true;
                 }
 
             }
@@ -96,11 +87,13 @@ class MysqlAdapter implements DatabaseAdapterInterface
     }
 
     /**
-     * Assign this adapter to the models
+     * Test if connected to DB
+     *
+     * @return bool
      */
-    public function bootModel()
+    public function isLinked()
     {
-        AbstractModel::setAdapter($this);
+        return (isset($this->_link) && $this->_link instanceof \mysqli);
     }
 
     /**
@@ -111,10 +104,14 @@ class MysqlAdapter implements DatabaseAdapterInterface
      */
     public function quoteValue($value)
     {
+        if (!$this->isLinked()) {
+            throw new MysqlAdapterException('Not connected to DB');
+        }
+
         if ( $value === null ) {
             $value = 'NULL';
         } elseif (!is_numeric($value)) {
-            $value = "'" . mysqli_real_escape_string($this->_link, $value) . "'";
+            $value = "'" . $this->_link->real_escape_string($value) . "'";
         }
 
         return $value;
@@ -211,6 +208,10 @@ class MysqlAdapter implements DatabaseAdapterInterface
      */
     public function query($query)
     {
+        if (!$this->isLinked()) {
+            throw new MysqlAdapterException('Not connected to DB');
+        }
+
         if (empty($query) || !is_string($query)) {
             throw new \InvalidArgumentException('The specified query is not valid');
         }

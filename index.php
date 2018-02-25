@@ -19,11 +19,8 @@
 
 
 /**
+ *
  * Current :
- * @TODO : DB propre
- *
- *
- * Next 1 :
  * # Relations :
  * @TODO : One To One
  * @TODO : One To Many

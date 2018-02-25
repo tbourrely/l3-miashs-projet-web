@@ -7,33 +7,56 @@
 
 namespace App;
 
+use Pure\ORM\Classes\ConnectionManager;
 
-use Pure\ORM\Classes\MysqlAdapter;
-use Pure\ORM\Exceptions\MysqlAdapterException;
-
-class ConnectionFactory extends MysqlAdapter
+/**
+ * Class ConnectionFactory
+ *
+ * @package App
+ */
+class ConnectionFactory
 {
+    /**
+     * Config
+     *
+     * @var
+     */
     private static $config;
-    private static $manager;
 
+    /**
+     * connection manager
+     *
+     * @var ConnectionManager
+     */
+    private static $connectionManager;
+
+    /**
+     * Load config
+     *
+     * @param $file
+     * @throws \Exception
+     */
     public static function setConfig($file)
     {
         if ( file_exists($file) ) {
             static::$config = parse_ini_file($file);
         } else {
-            throw new MysqlAdapterException('The config file does not exists');
+            throw new \Exception('The config file does not exists');
         }
     }
 
+    /**
+     * Create a DB connection
+     */
     public static function makeConnection()
     {
-        self::$manager = new MysqlAdapter();
-        self::$manager->connect([
+        self::$connectionManager = new ConnectionManager();
+        self::$connectionManager->addConnection([
             'host'      => self::$config['host'],
             'user'      => self::$config['user'],
             'password'  => self::$config['password'],
             'dbname'    => self::$config['dbname']
         ]);
-        self::$manager->bootModel();
+        self::$connectionManager->bootModel();
     }
 }
