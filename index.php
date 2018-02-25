@@ -20,7 +20,8 @@
 
 /**
  * Current :
- * @TODO : DB as global propre
+ * @TODO : DB propre
+ *
  *
  * Next 1 :
  * # Relations :
@@ -35,6 +36,9 @@
  *
  * # Next 2 :
  * @TODO : Middleware system
+ *
+ * # Next 3 :
+ * @TODO : passage a PDO
  */
 
 require __DIR__ . str_replace('/', DIRECTORY_SEPARATOR, '/lib/Autoloader/Autoloader.php');
@@ -54,8 +58,8 @@ $ptpl->setDirectory(__DIR__ . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR 
  * BDD
  */
 $db_ini = __DIR__ . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'conf' . DIRECTORY_SEPARATOR . 'db.conf.ini';
-$mysqlAdapter = new \Pure\ORM\Classes\MysqlAdapter($db_ini);
-
+\App\ConnectionFactory::setConfig($db_ini);
+\App\ConnectionFactory::makeConnection();
 
 /*
  * ROUTER
@@ -69,20 +73,18 @@ $router->get('/', function() {
 
 
 
-$router->get('/clients', function() use($mysqlAdapter) {
-    \Pure\ORM\AbstractClasses\AbstractModel::setAdapter($mysqlAdapter);
-
+$router->get('/clients', function() {
     // test get all : OK
-    /*$clients = \App\Model\Client::all();
-    var_dump(count($clients));*/
+    $clients = \App\Model\Client::all();
+    var_dump(count($clients));
 
     // test where : OK
-    /*$clients = \App\Model\Client::where("nom LIKE 'B%'");
-    var_dump(count($clients));*/
+    $clients = \App\Model\Client::where("nom LIKE 'B%'");
+    var_dump(count($clients));
 
     // test first : OK
-    /*$clients = \App\Model\Client::where("nom LIKE 'B%'")->first();
-    var_dump(count($clients->nom));*/
+    $clients = \App\Model\Client::where("nom LIKE 'B%'")->first();
+    var_dump(count($clients->nom));
 
 
     // test insert : OK
@@ -99,83 +101,5 @@ $router->get('/clients', function() use($mysqlAdapter) {
 });
 
 
-
-
-
-
-
-
-
-
-// # OLD TESTS
-
-/*$router->get('/posts/:id', function($id) use ($router) {
-    echo $router->url('posts.show', ['id' => 'monId']);
-    echo '<br>';
-    echo "Voila l'article $id";
-}, 'posts.show')->with('id', '[0-9]+');
-
-$router->get('/posts/:name', function($name) use ($ptpl, $router) {
-
-    $template = $ptpl->load('post');
-    $arrayTest = array(
-        'val1',
-        'val2',
-        'val3'
-    );
-
-    $template->render(array('post' => $name, 'url' => $router->url('posts.showByName', ['name' => 'postNameTest']), 'myArray' => $arrayTest, 'testVal' => 0));
-
-}, 'posts.showByName')->with('name', '[^0-9]+');
-
-$router->get('/posts/:id-:slug', function($id, $slug) {
-    echo "Article $slug : $id";
-})->with('id', '[0-9]+')->with('slug', '[a-z\-0-9]+');*/
-
-/*$router->get('/client', function() use($mysqlAdapter) {
-    $clientMapper = new \App\Mapper\ClientMapper($mysqlAdapter);
-
-    $client = $clientMapper->findById(1);
-    if (isset($client)) {
-        var_dump('findById : ' . $client->nom);
-    } else {
-        var_dump('error get client by id');
-    }
-
-    $clientCollection = $clientMapper->find();
-    if (isset($clientCollection)) {
-        foreach ($clientCollection->getIterator() as $client) {
-            var_dump('find : ' . $client->nom);
-        }
-    } else {
-        var_dump('error getting client collection');
-    }
-});*/
-
-/*$router->get('/produits/:id', function($id) use ($mysqlAdapter) {
-    $clientMapper = new \App\Mapper\ClientMapper($mysqlAdapter);
-    $produitMapper = new \App\Mapper\ProduitMapper($mysqlAdapter, $clientMapper);
-
-    $produit = $produitMapper->findById($id);
-
-    echo "<h1>$produit->nom</h1>";
-    echo "<h2>prix : $produit->prix €</h2>";
-    echo "<h2>Client : " . $produit->client->nom . " " . $produit->client->prenom . "</h2>";
-
-});*/
-
-/*$router->get('/produits/clt/:id', function($id) use($mysqlAdapter) {
-    $clientMapper = new \App\Mapper\ClientMapper($mysqlAdapter);
-    $produitMapper = new \App\Mapper\ProduitMapper($mysqlAdapter);
-
-    $clientMapper->setMapper('_productMapper', $produitMapper);
-    $produitMapper->setMapper('_clientMapper', $clientMapper);
-
-    $client = $clientMapper->findById($id);
-
-    foreach ($client->produits->getIterator() as $produit) {
-        var_dump($produit->nom);
-    }
-});*/
 
 $router->run();

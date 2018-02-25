@@ -17,9 +17,10 @@ interface DatabaseAdapterInterface
     /**
      * Connect to DB
      *
+     * @param array $config
      * @return mixed
      */
-    public function connect();
+    public function connect(array $config);
 
     /**
      * Disconnect from DB

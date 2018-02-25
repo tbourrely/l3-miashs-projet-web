@@ -6,6 +6,7 @@
  */
 
 namespace Pure\ORM\Classes;
+use Pure\ORM\AbstractClasses\AbstractModel;
 use Pure\ORM\Exceptions\MysqlAdapterException;
 use Pure\ORM\Interfaces\DatabaseAdapterInterface;
 
@@ -16,13 +17,6 @@ use Pure\ORM\Interfaces\DatabaseAdapterInterface;
  */
 class MysqlAdapter implements DatabaseAdapterInterface
 {
-    /**
-     * Database config
-     *
-     * @var array
-     */
-    protected $_config;
-
     /**
      * Mysqli instance
      *
@@ -39,20 +33,10 @@ class MysqlAdapter implements DatabaseAdapterInterface
 
     /**
      * MysqlAdapter constructor.
-     *
-     * @param $dbIniFile
-     * @throws MysqlAdapterException
      */
-    public function __construct($dbIniFile)
+    public function __construct()
     {
-        $this->_link = null;
-        $this->_result = null;
-
-        if ( file_exists($dbIniFile) ) {
-            $this->_config = parse_ini_file($dbIniFile);
-        } else {
-            throw new MysqlAdapterException('No such ini file');
-        }
+        // nothing to do here for now
     }
 
     /**
@@ -66,29 +50,28 @@ class MysqlAdapter implements DatabaseAdapterInterface
     /**
      * Connect to DB
      *
-     * @return \mysqli|false
+     * @param array $config
+     * @return bool|\mysqli|null
      * @throws MysqlAdapterException
      */
-    public function connect()
+    public function connect(array $config)
     {
         if ( !isset($this->_link) ) {
 
-            if ( !empty($this->_config) ) {
+            if ( !empty($config) ) {
 
-                $this->_link = mysqli_connect(
-                    $this->_config['host'],
-                    $this->_config['user'],
-                    $this->_config['password'],
-                    $this->_config['db']
+                $this->_link = new \mysqli(
+                    $config['host'],
+                    $config['user'],
+                    $config['password'],
+                    $config['dbname']
                 );
 
-                if ( !mysqli_connect_error() ) {
-                    return $this->_link;
+                if ($this->_link->connect_error) {
+                    throw new MysqlAdapterException('Connection to db impossible');
                 }
 
             }
-
-            throw new MysqlAdapterException('Connection to db impossible');
 
         }
 
@@ -113,6 +96,14 @@ class MysqlAdapter implements DatabaseAdapterInterface
     }
 
     /**
+     * Assign this adapter to the models
+     */
+    public function bootModel()
+    {
+        AbstractModel::setAdapter($this);
+    }
+
+    /**
      * Escape string
      *
      * @param $value
@@ -120,8 +111,6 @@ class MysqlAdapter implements DatabaseAdapterInterface
      */
     public function quoteValue($value)
     {
-        $this->connect();
-
         if ( $value === null ) {
             $value = 'NULL';
         } elseif (!is_numeric($value)) {
@@ -225,8 +214,6 @@ class MysqlAdapter implements DatabaseAdapterInterface
         if (empty($query) || !is_string($query)) {
             throw new \InvalidArgumentException('The specified query is not valid');
         }
-
-        $this->connect();
 
         if ( !($this->_result = $this->_link->query($query)) ) {
             throw new MysqlAdapterException('Error executing the specified query');
