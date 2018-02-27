@@ -173,14 +173,32 @@ abstract class AbstractModel
         return $collection->all();
     }
 
-    public function hasOne($modelName, $foreignKey)
+    /**
+     * One To One relationship
+     *
+     * @param $modelName
+     * @param $foreignKey
+     * @param null $customKey
+     * @return mixed
+     */
+    public function hasOne($modelName, $foreignKey, $customKey = null)
     {
         if (!class_exists($modelName)) {
             new \Exception('hasOne class does not exists');
         }
 
-        $thisId = $this->getId();
-        $where = "$foreignKey = '$thisId'";
+        $key = null;
+        if (isset($customKey)) {
+            if (isset($this->$customKey)) {
+                $key = $this->$customKey;
+            }
+        }
+
+        if (!isset($key)) {
+            $key = $this->getId();
+        }
+
+        $where = "$foreignKey = '$key'";
 
         return $modelName::where($where);
     }
