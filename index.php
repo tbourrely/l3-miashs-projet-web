@@ -22,10 +22,10 @@
  *
  * Current :
  * # Relations :
- * @TODO : One To One
- * @TODO : One To Many
- * @TODO : One To Many (Inverse)
- * @TODO : Many To Many
+ * @TODO : One To One (Inverse) -> belongsTo
+ * @TODO : One To Many -> hasMany
+ * @TODO : One To Many (Inverse) -> belongsTo
+ * @TODO : Many To Many -> belongsToMany
  *
  * # a verifier si existe encore apres refacto
  * @TODO : probleme boucle infinie quand deux entity on un proxy
@@ -72,17 +72,15 @@ $router->get('/', function() {
 
 $router->get('/clients', function() {
     // test get all : OK
-    $clients = \App\Model\Client::all();
-    var_dump(count($clients));
+    /*$clients = \App\Model\Client::all();
+    var_dump(count($clients));*/
 
     // test where : OK
-    $clients = \App\Model\Client::where("nom LIKE 'B%'");
-    var_dump(count($clients));
+    /*$clients = \App\Model\Client::where("nom LIKE 'B%'");
+    var_dump(count($clients));*/
 
     // test first : OK
-    $clients = \App\Model\Client::where("nom LIKE 'B%'")->first();
-    var_dump(count($clients->nom));
-
+    /*$clients = \App\Model\Client::where("nom LIKE 'B%'")->first();*/
 
     // test insert : OK
     /*$clt->prenom = 'jeanTest';
@@ -97,6 +95,11 @@ $router->get('/clients', function() {
     /*\App\Model\Client::delete($clt);*/
 });
 
+$router->get('/hasOne', function() {
+   $client = \App\Model\Client::where()->first();
+   $adress = $client->getAdress();
+   var_dump($adress->adresse);
+});
 
 
 $router->run();

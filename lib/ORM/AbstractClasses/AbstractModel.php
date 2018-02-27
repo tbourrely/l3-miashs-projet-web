@@ -173,6 +173,18 @@ abstract class AbstractModel
         return $collection->all();
     }
 
+    public function hasOne($modelName, $foreignKey)
+    {
+        if (!class_exists($modelName)) {
+            new \Exception('hasOne class does not exists');
+        }
+
+        $thisId = $this->getId();
+        $where = "$foreignKey = '$thisId'";
+
+        return $modelName::where($where);
+    }
+
 
     /********************************************************
      * ENTITY

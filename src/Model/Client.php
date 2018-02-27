@@ -14,4 +14,9 @@ class Client extends AbstractModel
     protected static $table = 'Client';
     protected $primaryKey = 'id';
     protected $allowedFields = array('id', 'nom', 'prenom');
+
+    public function getAdress()
+    {
+        return $this->hasOne('App\Model\Adresse', 'idClient')->first();
+    }
 }
