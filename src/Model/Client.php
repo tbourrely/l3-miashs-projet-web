@@ -12,11 +12,16 @@ use Pure\ORM\AbstractClasses\AbstractModel;
 class Client extends AbstractModel
 {
     protected static $table = 'Client';
-    protected $primaryKey = 'id';
+    protected static $primaryKey = 'id';
     protected $allowedFields = array('id', 'nom', 'prenom');
 
     public function getAdress()
     {
         return $this->hasOne('App\Model\Adresse', 'idClient');
+    }
+
+    public function getRoles()
+    {
+        return $this->belongsToMany('App\Model\Role', 'ClientRole', 'idClient', 'idRole');
     }
 }

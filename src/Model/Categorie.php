@@ -12,7 +12,7 @@ use Pure\ORM\AbstractClasses\AbstractModel;
 class Categorie extends AbstractModel
 {
     protected static $table = 'Categorie';
-    protected $primaryKey = 'id';
+    protected static $primaryKey = 'id';
     protected $allowedFields = array('id', 'nom');
 
     public function getProduits()

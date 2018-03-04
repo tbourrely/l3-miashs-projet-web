@@ -21,14 +21,6 @@
 /**
  *
  * Current :
- * # Relations :
- * @TODO : Many To Many -> belongsToMany
- *
- * # a verifier si existe encore apres refacto
- * @TODO : probleme boucle infinie quand deux entity on un proxy
- *
- *
- * # Next 2 :
  * @TODO : Middleware system
  *
  * # Next 3 :
@@ -59,12 +51,9 @@ $db_ini = __DIR__ . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'conf' .
  */
 $router = new Router($_GET['url']);
 
-
 $router->get('/', function() {
     echo "Bienvenue sur ma homepage !";
 });
-
-
 
 $router->get('/clients', function() {
     // test get all : OK
@@ -111,6 +100,18 @@ $router->get('/hasMany', function() {
     }
 });
 
+$router->get('belongsToMany', function() {
+    $clt = \App\Model\Client::where()->first();
+    $roles = $clt->getRoles();
+    foreach ($roles as $role) {
+        var_dump($role->type);
+    }
 
+    $role = $roles[0];
+
+    foreach ($role->getClients() as $client) {
+        var_dump($client->nom);
+    }
+});
 
 $router->run();

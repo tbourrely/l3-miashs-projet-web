@@ -12,7 +12,7 @@ use Pure\ORM\AbstractClasses\AbstractModel;
 class Adresse extends AbstractModel
 {
     protected static $table = 'Adresse';
-    protected $primaryKey = 'id';
+    protected static $primaryKey = 'id';
     protected $allowedFields = array('id', 'adresse', 'cp', 'ville', 'idClient');
 
     public function getClient()

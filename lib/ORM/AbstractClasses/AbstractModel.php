@@ -22,7 +22,7 @@ abstract class AbstractModel
      *
      * @var string
      */
-    protected $primaryKey;
+    protected static $primaryKey;
 
     /**
      * Allowed DB fields
@@ -93,7 +93,6 @@ abstract class AbstractModel
      * CRUD OPERATIONS
      ********************************************************/
 
-
     /**
      * Find entities matching criteria
      *
@@ -133,7 +132,7 @@ abstract class AbstractModel
      */
     public static function update(AbstractModel $entity)
     {
-        $pkName = $entity->getPrimaryKey();
+        $pkName = $entity::getPrimaryKey();
         $id = $entity->_get($pkName);
         $data = $entity->toArray();
 
@@ -149,7 +148,7 @@ abstract class AbstractModel
      */
     public static function delete(AbstractModel $entity)
     {
-        $pkName = $entity->getPrimaryKey();
+        $pkName = $entity::getPrimaryKey();
         $id = $entity->_get($pkName);
         return static::$_adapter->delete(static::$table, "$pkName = '$id'");
     }
@@ -175,12 +174,12 @@ abstract class AbstractModel
      *
      * @param $modelName
      * @param $foreignKey
-     * @param null $customField
+     * @param null $localKey
      * @return mixed
      */
-    public function hasOne($modelName, $foreignKey, $customField = null)
+    public function hasOne($modelName, $foreignKey, $localKey = null)
     {
-        return $this->hasMany($modelName, $foreignKey, $customField)->first();
+        return $this->hasMany($modelName, $foreignKey, $localKey)->first();
     }
 
     /**
@@ -188,18 +187,21 @@ abstract class AbstractModel
      *
      * @param $modelName
      * @param $foreignKey
-     * @param $value
-     * @return null|mixed
+     * @param $localKey
+     * @return mixed|null
      */
-    public function belongsTo($modelName, $foreignKey, $value)
+    public function belongsTo($modelName, $foreignKey, $localKey)
     {
-        static::variablesNotEmpty([$modelName, $foreignKey, $value]);
+        static::variablesNotEmpty([$modelName, $foreignKey, $localKey]);
         static::classExists($modelName);
 
-        if (isset($this->$value)) {
-            $value = static::$_adapter->quoteValue($this->$value);
-            $where = "$foreignKey = $value";
+        if (isset($this->$localKey)) {
+            $localKey = static::$_adapter->quoteValue($this->$localKey);
+            $where = "$foreignKey = $localKey";
 
+            /**
+             * @var $modelName AbstractModel
+             */
             return $modelName::where($where)->first();
         }
 
@@ -208,22 +210,21 @@ abstract class AbstractModel
 
     /**
      * One To Many relationship
-     * Returns an EntityCollection
      *
      * @param $modelName
      * @param $foreignKey
-     * @param null $customField
-     * @return mixed
+     * @param null $localKey
+     * @return EntityCollection
      */
-    public function hasMany($modelName, $foreignKey, $customField = null)
+    public function hasMany($modelName, $foreignKey, $localKey = null)
     {
         static::variablesNotEmpty([$modelName, $foreignKey]);
         static::classExists($modelName);
 
         $key = null;
-        if (isset($customField)) {
-            if (isset($this->$customField)) {
-                $key = $this->$customField;
+        if (isset($localKey)) {
+            if (isset($this->$localKey)) {
+                $key = $this->$localKey;
             }
         }
 
@@ -235,10 +236,51 @@ abstract class AbstractModel
 
         $where = "$foreignKey = $key";
 
+        /**
+         * @var $modelName AbstractModel
+         */
         return $modelName::where($where);
     }
 
+    /**
+     * Many To Many relationship
+     *
+     * @param $modelName
+     * @param $pivotTable
+     * @param $modelForeignKey
+     * @param $targetForeignKey
+     * @return null|EntityCollection
+     */
+    public function belongsToMany($modelName, $pivotTable, $modelForeignKey, $targetForeignKey)
+    {
+        static::variablesNotEmpty([$modelName, $pivotTable, $modelForeignKey, $targetForeignKey]);
+        static::classExists($modelName);
 
+        $modelPk = static::$_adapter->quoteValue($this->getId());
+        $wherePivot = "$modelForeignKey = $modelPk";
+
+        $rows = static::$_adapter->select($pivotTable, $wherePivot);
+
+        if ($rows) {
+
+            $targetList = array();
+            while ($data = static::$_adapter->fetch()) {
+                if (isset($data[$targetForeignKey])) {
+                    $targetList[] = $data[$targetForeignKey];
+                }
+            }
+
+            /**
+             * @var $modelName AbstractModel
+             */
+            $targetPk = $modelName::getPrimaryKey();
+            $where = "$targetPk IN (" . implode(',', $targetList) . ')';
+
+            return $modelName::where($where);
+        }
+
+        return null;
+    }
 
     /********************************************************
      * HELPERS
@@ -388,7 +430,7 @@ abstract class AbstractModel
      */
     public function getId()
     {
-        $acc = $this->primaryKey;
+        $acc = static::$primaryKey;
         return $this->$acc;
     }
 
@@ -397,8 +439,8 @@ abstract class AbstractModel
      *
      * @return string
      */
-    public function getPrimaryKey()
+    public static function getPrimaryKey()
     {
-        return $this->primaryKey;
+        return static::$primaryKey;
     }
 }
