@@ -175,29 +175,12 @@ abstract class AbstractModel
      *
      * @param $modelName
      * @param $foreignKey
-     * @param null $customKey
+     * @param null $customField
      * @return mixed
      */
-    public function hasOne($modelName, $foreignKey, $customKey = null)
+    public function hasOne($modelName, $foreignKey, $customField = null)
     {
-        static::classExists($modelName);
-
-        $key = null;
-        if (isset($customKey)) {
-            if (isset($this->$customKey)) {
-                $key = $this->$customKey;
-            }
-        }
-
-        if (!isset($key)) {
-            $key = $this->getId();
-        }
-
-        $key = static::$_adapter->quoteValue($key);
-
-        $where = "$foreignKey = $key";
-
-        return $modelName::where($where);
+        return $this->hasMany($modelName, $foreignKey, $customField)->first();
     }
 
     /**
@@ -222,6 +205,40 @@ abstract class AbstractModel
 
         return null;
     }
+
+    /**
+     * One To Many relationship
+     * Returns an EntityCollection
+     *
+     * @param $modelName
+     * @param $foreignKey
+     * @param null $customField
+     * @return mixed
+     */
+    public function hasMany($modelName, $foreignKey, $customField = null)
+    {
+        static::variablesNotEmpty([$modelName, $foreignKey]);
+        static::classExists($modelName);
+
+        $key = null;
+        if (isset($customField)) {
+            if (isset($this->$customField)) {
+                $key = $this->$customField;
+            }
+        }
+
+        if (!isset($key)) {
+            $key = $this->getId();
+        }
+
+        $key = static::$_adapter->quoteValue($key);
+
+        $where = "$foreignKey = $key";
+
+        return $modelName::where($where);
+    }
+
+
 
     /********************************************************
      * HELPERS

@@ -22,7 +22,6 @@
  *
  * Current :
  * # Relations :
- * @TODO : One To Many -> hasMany
  * @TODO : One To Many (Inverse) -> belongsTo
  * @TODO : Many To Many -> belongsToMany
  *
@@ -104,5 +103,14 @@ $router->get('/belongsTo', function () {
     $client = $adresse->getClient();
     var_dump($client->nom);
 });
+
+$router->get('/hasMany', function() {
+    $cat = \App\Model\Categorie::where()->first();
+    foreach ($cat->getProduits() as $produit) {
+        var_dump($produit->nom);
+    }
+});
+
+
 
 $router->run();

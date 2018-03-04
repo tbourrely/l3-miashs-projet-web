@@ -17,6 +17,6 @@ class Client extends AbstractModel
 
     public function getAdress()
     {
-        return $this->hasOne('App\Model\Adresse', 'idClient')->first();
+        return $this->hasOne('App\Model\Adresse', 'idClient');
     }
 }
