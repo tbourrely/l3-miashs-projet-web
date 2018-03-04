@@ -106,4 +106,11 @@ interface DatabaseAdapterInterface
      */
     public function affectedRows();
 
+    /**
+     * Escape string
+     *
+     * @param $value
+     * @return mixed
+     */
+    public function quoteValue($value);
 }

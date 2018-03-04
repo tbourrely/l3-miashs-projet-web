@@ -61,9 +61,6 @@ abstract class AbstractModel
             if (in_array($name, $this->allowedFields)) {
                 $this->$name = $value;
             }
-            /*if ($value instanceof AbstractProxy) {
-                $value = $value->load();
-            }*/
         }
     }
 
@@ -183,9 +180,7 @@ abstract class AbstractModel
      */
     public function hasOne($modelName, $foreignKey, $customKey = null)
     {
-        if (!class_exists($modelName)) {
-            new \Exception('hasOne class does not exists');
-        }
+        static::classExists($modelName);
 
         $key = null;
         if (isset($customKey)) {
@@ -198,11 +193,67 @@ abstract class AbstractModel
             $key = $this->getId();
         }
 
-        $where = "$foreignKey = '$key'";
+        $key = static::$_adapter->quoteValue($key);
+
+        $where = "$foreignKey = $key";
 
         return $modelName::where($where);
     }
 
+    /**
+     * One To One relationship (inverse)
+     *
+     * @param $modelName
+     * @param $field
+     * @param $value
+     * @return null|mixed
+     */
+    public function belongsTo($modelName, $field, $value)
+    {
+        static::variablesNotEmpty([$modelName, $field, $value]);
+        static::classExists($modelName);
+
+        if (isset($this->$value)) {
+            $value = static::$_adapter->quoteValue($this->$value);
+            $where = "$field = $value";
+
+            return $modelName::where($where);
+        }
+
+        return null;
+    }
+
+    /********************************************************
+     * HELPERS
+     ********************************************************/
+
+    /**
+     * Assess $class existence
+     *
+     * @param $class
+     * @throws \Exception
+     */
+    public static function classExists($class)
+    {
+        if (!class_exists($class)) {
+            throw new \Exception("$class does not exists");
+        }
+    }
+
+    /**
+     * Assess that all variables in $vars are set
+     *
+     * @param array $params
+     * @throws \Exception
+     */
+    public static function variablesNotEmpty(array $vars)
+    {
+        foreach ($vars as $var) {
+            if (!isset($var)) {
+                throw new \Exception('Not set variables not allowed');
+            }
+        }
+    }
 
     /********************************************************
      * ENTITY

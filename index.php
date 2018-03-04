@@ -22,7 +22,6 @@
  *
  * Current :
  * # Relations :
- * @TODO : One To One (Inverse) -> belongsTo
  * @TODO : One To Many -> hasMany
  * @TODO : One To Many (Inverse) -> belongsTo
  * @TODO : Many To Many -> belongsToMany
@@ -50,7 +49,6 @@ use \Pure\TemplateEngine\Pure_Templates_Environment;
 $ptpl = new Pure_Templates_Environment();
 $ptpl->setDirectory(__DIR__ . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'Templates');
 
-
 /*
  * BDD
  */
@@ -72,27 +70,27 @@ $router->get('/', function() {
 
 $router->get('/clients', function() {
     // test get all : OK
-    /*$clients = \App\Model\Client::all();
-    var_dump(count($clients));*/
+    $clients = \App\Model\Client::all();
+    var_dump(count($clients));
 
     // test where : OK
-    /*$clients = \App\Model\Client::where("nom LIKE 'B%'");
-    var_dump(count($clients));*/
+    $clients = \App\Model\Client::where("nom LIKE 'B%'");
+    var_dump(count($clients));
 
     // test first : OK
-    /*$clients = \App\Model\Client::where("nom LIKE 'B%'")->first();*/
+    $clt = \App\Model\Client::where("nom LIKE 'B%'")->first();
 
     // test insert : OK
-    /*$clt->prenom = 'jeanTest';
+    $clt->prenom = 'jeanTest';
     $clt->nom = 'insertTest';
-    \App\Model\Client::insert($clt);*/
+    \App\Model\Client::insert($clt);
 
     // test update : OK
-    /*$clt->prenom = 'TotoUpdate';
-    \App\Model\Client::update($clt);*/
+    $clt->prenom = 'TotoUpdate';
+    \App\Model\Client::update($clt);
 
     // test delete : OK
-    /*\App\Model\Client::delete($clt);*/
+    \App\Model\Client::delete($clt);
 });
 
 $router->get('/hasOne', function() {
@@ -101,5 +99,10 @@ $router->get('/hasOne', function() {
    var_dump($adress->adresse);
 });
 
+$router->get('/belongsTo', function () {
+    $adresse = \App\Model\Adresse::where()->first();
+    $client = $adresse->getClient();
+    var_dump($client->nom);
+});
 
 $router->run();
