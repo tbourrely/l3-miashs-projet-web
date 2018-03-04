@@ -187,20 +187,20 @@ abstract class AbstractModel
      * One To One relationship (inverse)
      *
      * @param $modelName
-     * @param $field
+     * @param $foreignKey
      * @param $value
      * @return null|mixed
      */
-    public function belongsTo($modelName, $field, $value)
+    public function belongsTo($modelName, $foreignKey, $value)
     {
-        static::variablesNotEmpty([$modelName, $field, $value]);
+        static::variablesNotEmpty([$modelName, $foreignKey, $value]);
         static::classExists($modelName);
 
         if (isset($this->$value)) {
             $value = static::$_adapter->quoteValue($this->$value);
-            $where = "$field = $value";
+            $where = "$foreignKey = $value";
 
-            return $modelName::where($where);
+            return $modelName::where($where)->first();
         }
 
         return null;

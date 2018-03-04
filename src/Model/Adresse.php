@@ -20,7 +20,7 @@ class Adresse extends AbstractModel
         $client = $this->belongsTo('App\Model\Client', 'id', 'idClient');
 
         if (isset($client)) {
-            return $client->first();
+            return $client;
         }
     }
 }
