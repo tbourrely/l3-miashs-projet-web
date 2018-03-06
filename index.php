@@ -5,21 +5,8 @@
  * 10/02/2018
  */
 
-
-/*
- * # Docs
- *
- * Eloquent doc
- * https://laravel.com/docs/5.6/eloquent-relationships
- *
- * Projet giftbox (exemple model)
- * https://github.com/tbourrely/giftbox/blob/master/src/giftbox/models/Categorie.php
- */
-
-
-
 /**
- *
+ * TODOLIST
  * Current :
  * @TODO : Middleware system
  *
@@ -27,6 +14,22 @@
  * @TODO : passage a PDO
  */
 
+
+/*
+ * DOC MIDDLEWARE
+ *
+ * https://github.com/tbourrely/ccd_berger_bourrely_froehlicher_marlier_wilmouth/blob/master/index.php
+ * https://github.com/tbourrely/ccd_berger_bourrely_froehlicher_marlier_wilmouth/blob/master/src/middlewares/AuthMiddleware.php
+ * https://www.slimframework.com/docs/v3/concepts/middleware.html
+ *
+ *
+ * Linked list ? : http://www.php.net/manual/en/class.spldoublylinkedlist.php
+ */
+
+
+/*
+ * AUTOLOADER
+ */
 require __DIR__ . str_replace('/', DIRECTORY_SEPARATOR, '/lib/Autoloader/Autoloader.php');
 \Pure\Autoloader\Autoloader::register();
 
@@ -51,8 +54,10 @@ $db_ini = __DIR__ . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'conf' .
  */
 $router = new Router($_GET['url']);
 
-$router->get('/', function() {
-    echo "Bienvenue sur ma homepage !";
+$router->addMiddleware(new \App\Middlewares\TestMiddleware());
+
+$router->get('/', function() use($ptpl) {
+    $ptpl->load('homepage')->render(['title' => 'Pure homepage']);
 });
 
 $router->get('/clients', function() {
@@ -107,11 +112,18 @@ $router->get('belongsToMany', function() {
         var_dump($role->type);
     }
 
+    /**
+     * @var $role \App\Model\Role
+     */
     $role = $roles[0];
-
-    foreach ($role->getClients() as $client) {
-        var_dump($client->nom);
+    $clients = $role->getClients();
+    if (isset($clients)) {
+        foreach ($clients as $client) {
+            var_dump($client->nom);
+        }
     }
 });
+
+
 
 $router->run();

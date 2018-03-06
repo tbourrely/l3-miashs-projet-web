@@ -1,1 +1,0 @@
-<h1>Footer File</h1>

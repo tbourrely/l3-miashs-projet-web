@@ -38,6 +38,13 @@ class Router
     private $namedRoutes = array();
 
     /**
+     * Middleware layers
+     *
+     * @var array
+     */
+    private $middlewareLayers = array();
+
+    /**
      * Router constructor.
      *
      * @param $url string
@@ -57,7 +64,7 @@ class Router
      */
     public function get($path, $callable, $name = null)
     {
-        return $this->add($path, $callable, 'GET', $name);
+        return $this->addRoute($path, $callable, 'GET', $name);
     }
 
     /**
@@ -70,7 +77,7 @@ class Router
      */
     public function post($path, $callable, $name = null)
     {
-        return $this->add($path, $callable, 'POST', $name);
+        return $this->addRoute($path, $callable, 'POST', $name);
     }
 
     /**
@@ -82,7 +89,7 @@ class Router
      * @param string $name
      * @return Route
      */
-    private function add($path, $callable, $method, $name)
+    private function addRoute($path, $callable, $method, $name)
     {
         $route = new Route($path, $callable);
         $this->routes[$method][] = $route;
@@ -111,13 +118,38 @@ class Router
         return $this->namedRoutes[$name]->getUrl($routeParams);
     }
 
+
+    public function run()
+    {
+        $this->runMiddlewares();
+
+
+    }
+
+
+    public function addMiddleware($middleware)
+    {
+        if (!in_array($middleware, $this->middlewareLayers)) {
+            $this->middlewareLayers[] = $middleware;
+        }
+    }
+
+    private function runMiddlewares()
+    {
+        foreach ($this->middlewareLayers as $middleware) {
+            $middleware();
+        }
+
+        $this->runRoute();
+    }
+
     /**
-     * Run the router
+     * Find the matching route
      *
      * @return mixed
      * @throws RouterException
      */
-    public function run()
+    private function runRoute()
     {
         if ( !isset($this->routes[$_SERVER['REQUEST_METHOD']]) ) {
             throw new RouterException('No route for this REQUEST_METHOD');

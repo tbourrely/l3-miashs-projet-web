@@ -47,6 +47,7 @@ class Pure_Templates_Environment
      */
     public function load($name)
     {
+        $name = str_replace('/', DIRECTORY_SEPARATOR, $name);
         $template = $this->templatesDir . DIRECTORY_SEPARATOR . $name . '.php';
 
         if ( file_exists($template) ) {
