@@ -17,11 +17,19 @@
  * @TODO : passage a PDO
  */
 
+/**
+ * ## DOC PSR-7
+ *
+ * https://www.php-fig.org/psr/psr-7/
+ *
+ * Example :
+ * https://github.com/guzzle/psr7/tree/master/src
+ */
 
 /*
  * ## DOC MIDDLEWARE
  *
- * TUTO GRAFIKART
+ * TUTO GRAFIKART :
  * https://www.grafikart.fr/formations/programmation-objet-php/middleware-psr15
  *
  */
