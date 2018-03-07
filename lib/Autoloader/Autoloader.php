@@ -15,10 +15,17 @@ namespace Pure\Autoloader;
 class Autoloader
 {
     /**
+     * @var array source list
+     */
+    private static $sourceList;
+
+    /**
      * Register autolaoder
      */
-    static function register()
+    static function register(array $sources)
     {
+        static::$sourceList = $sources;
+
         spl_autoload_register(array(__CLASS__, 'autoload'));
     }
 
@@ -30,20 +37,23 @@ class Autoloader
      */
     static function autoload($class)
     {
-        $source_directories = array(
-            'Pure'  => 'lib',
-            'App'   => 'src'
-        );
-
         $type = explode('\\', $class)[0];
 
-        if ( isset($source_directories[$type]) ) {
+        if ( isset(static::$sourceList[$type]) ) {
 
-            $file = str_replace(['\\', 'Pure/', 'App/'], ['/', '', ''], $class);
-            $source_dir = $source_directories[$type];
+            // Add a trailing slash to the base namespances
+            $replaceListKeys = array_merge(['\\'], array_map(function ($source) {
+                return $source . '/';
+            }, array_keys(static::$sourceList)));
+            $replaceListValues = array_merge(['/'], array_fill(0, count(static::$sourceList), ''));
 
-            if ( file_exists($source_dir . DIRECTORY_SEPARATOR . $file . '.php') ) {
-                require_once $source_dir . DIRECTORY_SEPARATOR . $file . '.php';
+            $file = str_replace($replaceListKeys, $replaceListValues, $class);
+
+            $sourceDir = static::$sourceList[$type];
+            $file = $sourceDir . DIRECTORY_SEPARATOR . $file . '.php';
+
+            if ( file_exists($file) ) {
+                require_once $file;
 
                 if (class_exists($class)) {
                     return true;
