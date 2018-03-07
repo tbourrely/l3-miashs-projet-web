@@ -6,7 +6,7 @@
  * 10/02/2018
  */
 
-namespace Pure\Router;
+namespace Pure\Router\Classes;
 
 /**
  * Class Route

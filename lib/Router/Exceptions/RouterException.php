@@ -5,7 +5,7 @@
  * 10/02/2018
  */
 
-namespace Pure\Router;
+namespace Pure\Router\Exceptions;
 
 
 class RouterException extends \Exception

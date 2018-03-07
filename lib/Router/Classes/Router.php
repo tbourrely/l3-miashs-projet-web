@@ -7,7 +7,9 @@
  * 10/02/2018
  */
 
-namespace Pure\Router;
+namespace Pure\Router\Classes;
+
+use Pure\Router\Exceptions\RouterException;
 
 /**
  * Class Router
