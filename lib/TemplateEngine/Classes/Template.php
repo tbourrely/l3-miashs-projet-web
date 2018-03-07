@@ -5,7 +5,7 @@
  * 11/02/2018
  */
 
-namespace Pure\TemplateEngine;
+namespace Pure\TemplateEngine\Classes;
 
 /**
  * Class Template

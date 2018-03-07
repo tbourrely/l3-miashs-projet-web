@@ -5,7 +5,11 @@
  * 11/02/2018
  */
 
-namespace Pure\TemplateEngine;
+namespace Pure\TemplateEngine\Classes;
+
+
+use Pure\TemplateEngine\Exceptions\Pure_Templates_Exception;
+
 
 /**
  * Class Pure_Templates_Environment

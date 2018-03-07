@@ -42,7 +42,7 @@ require __DIR__ . str_replace('/', DIRECTORY_SEPARATOR, '/lib/Autoloader/Autoloa
 \Pure\Autoloader\Autoloader::register();
 
 use Pure\Router\Classes\Router;
-use \Pure\TemplateEngine\Pure_Templates_Environment;
+use \Pure\TemplateEngine\Classes\Pure_Templates_Environment;
 
 
 /*
