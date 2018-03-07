@@ -8,9 +8,12 @@
 /**
  * TODOLIST
  * Current :
+ * @TODO : Implements PSR-7
+ *
+ * Next 1:
  * @TODO : Middleware system
  *
- * # Next 3 :
+ * # Next 2 :
  * @TODO : passage a PDO
  */
 
