@@ -45,6 +45,13 @@ class Router
     private $middlewareLayers = array();
 
     /**
+     * Index of the current middleware
+     *
+     * @var int
+     */
+    private $middlewareIndex = 0;
+
+    /**
      * Router constructor.
      *
      * @param $url string
@@ -118,15 +125,19 @@ class Router
         return $this->namedRoutes[$name]->getUrl($routeParams);
     }
 
-
+    /**
+     * Run the application
+     */
     public function run()
     {
         $this->runMiddlewares();
-
-
     }
 
-
+    /**
+     * Add a middleware
+     *
+     * @param $middleware
+     */
     public function addMiddleware($middleware)
     {
         if (!in_array($middleware, $this->middlewareLayers)) {
@@ -134,13 +145,34 @@ class Router
         }
     }
 
+    /**
+     * Start a recursive iteration through the middleware layers
+     *
+     * @return mixed
+     */
     private function runMiddlewares()
     {
-        foreach ($this->middlewareLayers as $middleware) {
-            $middleware();
+        $middleware = $this->getMiddleware();
+        $this->middlewareIndex++;
+        if (null === $middleware) {
+            $this->runRoute();
+        } else {
+            return $middleware([$this, 'run']);
+        }
+    }
+
+    /**
+     * Get the current layer
+     *
+     * @return mixed|null
+     */
+    private function getMiddleware()
+    {
+        if (isset($this->middlewareLayers[$this->middlewareIndex])) {
+            return $this->middlewareLayers[$this->middlewareIndex];
         }
 
-        $this->runRoute();
+        return null;
     }
 
     /**

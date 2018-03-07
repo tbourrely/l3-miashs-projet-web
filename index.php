@@ -16,14 +16,11 @@
 
 
 /*
- * DOC MIDDLEWARE
+ * ## DOC MIDDLEWARE
  *
- * https://github.com/tbourrely/ccd_berger_bourrely_froehlicher_marlier_wilmouth/blob/master/index.php
- * https://github.com/tbourrely/ccd_berger_bourrely_froehlicher_marlier_wilmouth/blob/master/src/middlewares/AuthMiddleware.php
- * https://www.slimframework.com/docs/v3/concepts/middleware.html
+ * TUTO GRAFIKART
+ * https://www.grafikart.fr/formations/programmation-objet-php/middleware-psr15
  *
- *
- * Linked list ? : http://www.php.net/manual/en/class.spldoublylinkedlist.php
  */
 
 
@@ -55,6 +52,7 @@ $db_ini = __DIR__ . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'conf' .
 $router = new Router($_GET['url']);
 
 $router->addMiddleware(new \App\Middlewares\TestMiddleware());
+$router->addMiddleware(new \App\Middlewares\TestMiddleware2());
 
 $router->get('/', function() use($ptpl) {
     $ptpl->load('homepage')->render(['title' => 'Pure homepage']);
