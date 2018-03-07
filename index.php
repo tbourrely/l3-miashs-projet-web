@@ -33,6 +33,7 @@ require __DIR__ . str_replace('/', DIRECTORY_SEPARATOR, '/lib/Autoloader/Autoloa
 use Pure\Router\Router;
 use \Pure\TemplateEngine\Pure_Templates_Environment;
 
+
 /*
  * Template Engine
  */
