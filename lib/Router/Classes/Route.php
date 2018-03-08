@@ -15,6 +15,25 @@ namespace Pure\Router\Classes;
  */
 class Route
 {
+    private $middlewareLayers = array();
+    private $middlewareIndex = 0;
+
+    public function withMiddleWare($middleware)
+    {
+        $this->middlewareLayers[] = $middleware;
+
+        return $this;
+    }
+
+    private function getMiddleware()
+    {
+        if (isset($this->middlewareLayers[$this->middlewareIndex])) {
+            return $this->middlewareLayers[$this->middlewareIndex];
+        }
+
+        return null;
+    }
+
     /**
      * Route's path
      *
@@ -99,7 +118,15 @@ class Route
      */
     public function call()
     {
-        return call_user_func_array($this->callable, $this->match_params);
+        $middleware = $this->getMiddleware();
+        $this->middlewareIndex++;
+
+        if (null === $middleware) {
+            return call_user_func_array($this->callable, $this->match_params);
+        } else {
+            return $middleware([$this, 'call']);
+        }
+
     }
 
     /**

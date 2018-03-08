@@ -11,7 +11,7 @@ class TestMiddleware
 {
     public function __invoke(Callable $next)
     {
-        echo '<br><h1>test middleware invoked</h1><br>';
+        var_dump($_SESSION);
         $next();
     }
 }

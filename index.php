@@ -8,9 +8,6 @@
 /**
  * TODOLIST
  * Current :
- * @TODO : Implements PSR-7
- *
- * Next 1:
  * @TODO : Middleware system
  *
  * # Next 2 :
@@ -33,6 +30,12 @@
  * https://www.grafikart.fr/formations/programmation-objet-php/middleware-psr15
  *
  */
+
+
+
+
+session_start();
+
 
 
 /*
@@ -68,11 +71,25 @@ $db_ini = __DIR__ . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'conf' .
 $router = new Router($_GET['url']);
 
 $router->addMiddleware(new \App\Middlewares\TestMiddleware());
-$router->addMiddleware(new \App\Middlewares\TestMiddleware2());
+
 
 $router->get('/', function() use($ptpl) {
     $ptpl->load('homepage')->render(['title' => 'Pure homepage']);
 });
+
+$router->get('/connect', function() {
+    $_SESSION['connected'] = true;
+    var_dump('connected');
+});
+
+$router->get('/disconnect', function() {
+    unset($_SESSION['connected']);
+    var_dump('disconnected');
+});
+
+$router->get('/protected', function() {
+    var_dump('You have access');
+})->withMiddleWare(new \App\Middlewares\TestRouteMiddleware());
 
 $router->get('/clients', function() {
     // test get all : OK
