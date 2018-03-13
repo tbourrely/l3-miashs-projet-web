@@ -26,6 +26,27 @@ class Pure_Templates_Environment
     private $templatesDir;
 
     /**
+     * Singleton instance
+     *
+     * @var null
+     */
+    private static $_instance = null;
+
+    /**
+     * Return an instance of the class
+     *
+     * @return null
+     */
+    public static function getInstance()
+    {
+        if (null === static::$_instance) {
+            static::$_instance = new Pure_Templates_Environment();
+        }
+
+        return static::$_instance;
+    }
+
+    /**
      * Set the path for $templatesDir
      *
      * @param string $directory
@@ -46,8 +67,7 @@ class Pure_Templates_Environment
      * Return the template
      *
      * @param string $name
-     * @return Template
-     * @throws Pure_Templates_Exception
+     * @return Template|null
      */
     public function load($name)
     {
@@ -58,6 +78,6 @@ class Pure_Templates_Environment
             return new Template($template);
         }
 
-        throw new Pure_Templates_Exception('No such template file');
+        return null;
     }
 }

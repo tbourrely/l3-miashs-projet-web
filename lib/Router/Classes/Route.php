@@ -8,6 +8,8 @@
 
 namespace Pure\Router\Classes;
 
+use Pure\Router\Exceptions\RouterException;
+
 /**
  * Class Route
  *
@@ -115,6 +117,7 @@ class Route
      * Call the route's callback
      *
      * @return mixed
+     * @throws RouterException
      */
     public function call()
     {
@@ -122,7 +125,24 @@ class Route
         $this->middlewareIndex++;
 
         if (null === $middleware) {
-            return call_user_func_array($this->callable, $this->match_params);
+            $callable = null;
+
+            $exploded = explode(':', $this->callable);
+
+            if (class_exists($exploded[0])) {
+                $classInstance = isset($exploded[0]) ? new $exploded[0] : null;
+                $methodName = isset($exploded[1]) ? $exploded[1]:null;
+
+                if (isset($classInstance) && method_exists($classInstance, $methodName)) {
+                    $callable = [$classInstance, $methodName];
+                }
+            } elseif (is_callable($this->callable)) {
+                $callable = $this->callable;
+            } else {
+                throw new RouterException('Callback function is not callable');
+            }
+
+            return call_user_func_array($callable, $this->match_params);
         } else {
             return $middleware([$this, 'call']);
         }
