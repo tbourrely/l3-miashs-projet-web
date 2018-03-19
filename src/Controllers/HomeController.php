@@ -13,6 +13,6 @@ class HomeController extends BaseController
 {
     public function home()
     {
-        $this->render('homepage', ['title' => 'Pure homepage']);
+        $this->render('homepage', ['isHome' => true]);
     }
 }
