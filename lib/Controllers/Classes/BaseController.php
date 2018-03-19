@@ -8,6 +8,7 @@
 namespace Pure\Controllers\Classes;
 
 
+use Pure\Router\Classes\Router;
 use Pure\TemplateEngine\Classes\Pure_Templates_Environment;
 
 class BaseController
@@ -18,11 +19,25 @@ class BaseController
     private $templateEngine;
 
     /**
+     * @var Router
+     */
+    private $router;
+
+    /**
      * BaseController constructor.
      */
     public function __construct()
     {
         $this->templateEngine = Pure_Templates_Environment::getInstance();
+        $this->router = Router::getCurrentRouter();
+    }
+
+    /**
+     * @return Router
+     */
+    public function getRouter()
+    {
+        return $this->router;
     }
 
     /**

@@ -13,6 +13,12 @@ class HomeController extends BaseController
 {
     public function home()
     {
-        $this->render('homepage', ['isHome' => true]);
+        $profils = array();
+
+        for ($i = 1; $i<17; $i++) {
+            $profils[$this->getRouter()->url('profilIndex', ['id' => $i])] = "/src/images/pic$i.jpg";
+        }
+
+        $this->render('homepage', ['isHome' => true, 'profils' => $profils]);
     }
 }

@@ -127,7 +127,6 @@ class Route
         if (null === $middleware) {
             $callable = null;
 
-
             if (is_callable($this->callable)) {
                 $callable = $this->callable;
             } elseif (is_string($this->callable)) {

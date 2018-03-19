@@ -54,6 +54,13 @@ class Router
     private $middlewareIndex = 0;
 
     /**
+     * Current router
+     *
+     * @var Router
+     */
+    private static $currentRouter;
+
+    /**
      * Router constructor.
      *
      * @param $url string
@@ -61,6 +68,15 @@ class Router
     public function __construct($url)
     {
         $this->url = $url;
+        static::$currentRouter = $this;
+    }
+
+    /**
+     * @return Router
+     */
+    public static function getCurrentRouter()
+    {
+        return static::$currentRouter;
     }
 
     /**

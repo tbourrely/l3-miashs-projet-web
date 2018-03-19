@@ -60,11 +60,9 @@ $db_ini = __DIR__ . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'conf' .
 $router = new Router($_GET['url']);
 
 // homepage
-$router->get('/',\App\Controllers\HomeController::class . ':home' , 'home');
+$router->get('/',\App\Controllers\HomeController::class . ':home', 'home');
 
-$router->get('/profil/:id', function ($id) {
-    var_dump($id);die;
-});
+$router->get('/profil/:id', \App\Controllers\ProfilController::class . ':index', 'profilIndex');
 
 $router->run();
 // ----------------------------------------------------------------------------------------

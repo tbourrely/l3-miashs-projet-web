@@ -22,6 +22,6 @@
                 portfolio template.</h2>
             <?php echo ($isHome === true) ? '<a href="#" class="button big alt"><span>Let\'s Go</span></a>' : ''; ?>
         </div>
-        <a href="#" class="button hidden"><span>Let's Go</span></a>
+        <a href="/" class="button hidden"><span>Let's Go</span></a>
     </div>
 </header>

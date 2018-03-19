@@ -13,6 +13,6 @@ class ProfilController extends BaseController
 {
     public function index($id)
     {
-        $this->render('detail1', ['isHome' => false]);
+        $this->render('profil', ['isHome' => false, 'idProfil' => $id]);
     }
 }
