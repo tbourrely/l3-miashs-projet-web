@@ -127,18 +127,23 @@ class Route
         if (null === $middleware) {
             $callable = null;
 
-            $exploded = explode(':', $this->callable);
 
-            if (class_exists($exploded[0])) {
-                $classInstance = isset($exploded[0]) ? new $exploded[0] : null;
-                $methodName = isset($exploded[1]) ? $exploded[1]:null;
-
-                if (isset($classInstance) && method_exists($classInstance, $methodName)) {
-                    $callable = [$classInstance, $methodName];
-                }
-            } elseif (is_callable($this->callable)) {
+            if (is_callable($this->callable)) {
                 $callable = $this->callable;
-            } else {
+            } elseif (is_string($this->callable)) {
+                $exploded = explode(':', $this->callable);
+
+                if (class_exists($exploded[0])) {
+                    $classInstance = isset($exploded[0]) ? new $exploded[0] : null;
+                    $methodName = isset($exploded[1]) ? $exploded[1]:null;
+
+                    if (isset($classInstance) && method_exists($classInstance, $methodName)) {
+                        $callable = [$classInstance, $methodName];
+                    }
+                }
+            }
+
+            if (null === $callable) {
                 throw new RouterException('Callback function is not callable');
             }
 

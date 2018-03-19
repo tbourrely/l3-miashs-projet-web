@@ -62,5 +62,9 @@ $router = new Router($_GET['url']);
 // homepage
 $router->get('/',\App\Controllers\HomeController::class . ':home' , 'home');
 
+$router->get('/profil/:id', function ($id) {
+    var_dump($id);die;
+});
+
 $router->run();
 // ----------------------------------------------------------------------------------------
