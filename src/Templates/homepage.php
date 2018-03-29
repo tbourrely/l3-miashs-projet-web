@@ -3,14 +3,17 @@
 <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === 1) : ?>
 
     <div class="container">
-        <div class="s-1 e-1 h-4" style="border: solid;">
+        <div class="s-1 e-1 h-4">
             <?php require_once __DIR__ . DIRECTORY_SEPARATOR . 'menu.php'; ?>
         </div>
 
-        <div class="s-2 e-13 h-4" style="border: solid;">
-
-            <?php var_dump($_SESSION); ?>
-
+        <div class="s-1 e-13 h-4 row">
+            <div class="home--connected">
+                <div class="logo"></div>
+                <div class="home--connected__text">
+                    <h2>Bienvenue <span class="username"><?php echo (isset($_SESSION['user']['login'])) ? $_SESSION['user']['login'] : ''; ?></span> !</h2>
+                </div>
+            </div>
         </div>
     </div>
 

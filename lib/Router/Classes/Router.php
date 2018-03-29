@@ -140,7 +140,18 @@ class Router
             throw new RouterException('No routes exists with this name');
         }
 
-        return $this->namedRoutes[$name]->getUrl($routeParams);
+        return '/' . $this->namedRoutes[$name]->getUrl($routeParams);
+    }
+
+    /**
+     * Return the base url
+     *
+     * @return string
+     */
+    public function getBaseUrl()
+    {
+        $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+        return sprintf("%s://%s", $protocol, $_SERVER['SERVER_NAME']);
     }
 
     /**

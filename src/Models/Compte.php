@@ -22,6 +22,10 @@ class Compte extends AbstractModel
 
         $users = static::where("login = $login AND password = $password");
 
-        return (count($users) === 1);
+        if ((count($users) === 1)) {
+            return $users->first();
+        }
+
+        return false;
     }
 }

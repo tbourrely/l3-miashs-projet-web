@@ -24,11 +24,10 @@
         but hey, it's pure CSS magic.
         -->
         <ul id="menu">
-            <a href="#"><li>Home</li></a>
-            <a href="#"><li>About</li></a>
-            <a href="#"><li>Info</li></a>
-            <a href="#"><li>Contact</li></a>
-            <a href="https://erikterwan.com/" target="_blank"><li>Show me more</li></a>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Profil</a></li>
+            <li><a href="#">Animaux</a></li>
+            <li><a href="#">Matchs</a></li>
         </ul>
     </div>
 </nav>

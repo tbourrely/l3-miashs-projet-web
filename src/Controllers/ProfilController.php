@@ -17,15 +17,21 @@ class ProfilController extends BaseController
         $this->render('profil', ['idProfil' => $id]);
     }
 
-
+    /**
+     * Formulaire GET
+     */
     public function loginGet()
     {
         $this->render('memberArea/login', ['action' => $this->getRouter()->url('loginPOST')]);
     }
 
+    /**
+     * Formulaire POST
+     */
     public function loginPost() {
         $errors = [];
 
+        // test champs vide
         if (!isset($_POST['login'])) {
             $errors[] = 'Vous devez spécifier un login';
         }
@@ -34,30 +40,39 @@ class ProfilController extends BaseController
             $errors[] = 'Vous devez spécifier un mot de passe';
         }
 
+
         if (empty($errors)) {
+            // champs remplis, on peut tester si l'utilisateur existe
 
             $result = Compte::userExists($_POST['login'], $_POST['password']);
 
             if ($result) {
+                // utilisateur existe
 
-                // logged in
                 $_SESSION['logged_in'] = 1;
+
+                // met en session quelques données utiles
+                $_SESSION['user'] = array(
+                    'idCompte'  => $result->idCompte,
+                    'login'     => $result->login
+                );
 
                 if (isset($_SESSION['errors']['login'])) {
                     unset($_SESSION['errors']['login']);
                 }
 
+                // redirige sur la homepage
+                $this->redirect($this->getRouter()->url('home'));
             } else {
-                $errors[] = 'login ou mot de passe incorrect';
+                // utilisateur n'existe PAS
 
+                $errors[] = 'login ou mot de passe incorrect';
                 $_SESSION['errors']['login'] = $errors;
 
-                // redirige au formulaire de connexion si erreur
+                // redirige vers le formulaire de connexion
                 $this->redirect($this->getRouter()->url('loginGET'));
-
             }
 
-        }
-
+        } // fin empty($errors)
     }
 }
