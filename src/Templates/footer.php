@@ -24,6 +24,7 @@
 <script src="/src/assets/js/skel.min.js"></script>
 <script src="/src/assets/js/util.js"></script>
 <script src="/src/assets/js/main.js"></script>
+<script src="/src/assets/js/custom.js"></script>
 
 </body>
 </html>

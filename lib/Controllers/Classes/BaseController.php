@@ -56,4 +56,10 @@ class BaseController
 
         exit();
     }
+
+    public function redirect($url)
+    {
+        header('Location: ' . $url);
+        exit();
+    }
 }

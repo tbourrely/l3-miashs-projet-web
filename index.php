@@ -62,7 +62,17 @@ $router = new Router($_GET['url']);
 // homepage
 $router->get('/',\App\Controllers\HomeController::class . ':home', 'home');
 
+// profil
 $router->get('/profil/:id', \App\Controllers\ProfilController::class . ':index', 'profilIndex');
+
+
+
+// espace membre
+// -> login
+$router->get('/login', \App\Controllers\ProfilController::class . ':loginGet', 'loginGET');
+$router->post('/login', \App\Controllers\ProfilController::class . ':loginPost', 'loginPOST');
+
+
 
 $router->run();
 // ----------------------------------------------------------------------------------------
