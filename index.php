@@ -72,6 +72,7 @@ $router->get('/profil/:id', \App\Controllers\ProfilController::class . ':index',
 $router->get('/login', \App\Controllers\ProfilController::class . ':loginGet', 'loginGET');
 $router->post('/login', \App\Controllers\ProfilController::class . ':loginPost', 'loginPOST');
 
+$router->get('/logout', \App\Controllers\ProfilController::class . ':logout', 'logout');
 
 
 $router->run();

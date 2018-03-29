@@ -75,4 +75,15 @@ class ProfilController extends BaseController
 
         } // fin empty($errors)
     }
+
+    /**
+     * Deconnexion
+     */
+    public function logout()
+    {
+        unset($_SESSION['logged_in']);
+        unset($_SESSION['user']);
+
+        $this->redirect($this->getRouter()->url('home'));
+    }
 }

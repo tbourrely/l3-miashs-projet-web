@@ -139,6 +139,9 @@
     transform: none;
 }
 
+/*
+ * animation sous les liens
+ */
 #menu a {
     text-decoration: none;
     font-weight: 400;
