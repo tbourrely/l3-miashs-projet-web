@@ -23,7 +23,7 @@
         <div class="inner">
             <div class="columns">
 
-                <?php foreach ($profils as $link => $img) : ?>
+                <?php foreach ($profils as $img => $link) : ?>
                     <div class="image fit">
                         <a href="<?=$link;?>"><img src="<?=$img?>" alt="" /></a>
                     </div>

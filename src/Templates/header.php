@@ -19,19 +19,14 @@
 
 <!-- Header -->
 <header id="header"
-        class="<?php echo (
-                    (isset($isHome) && $isHome === true)
-                    &&
-                    (!isset($_SESSION['logged_in'])
-                    || (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] !== 1))
-                ) ?:'preview'; ?>">
+        class="preview">
     <div class="inner">
-        <div class="content">
-            <h1>Radius</h1>
-            <h2>A fully responsive masonry-style<br />
-                portfolio template.</h2>
-            <?php echo (isset($isHome) && $isHome === true) ? '<a href="#" class="button big alt"><span>Let\'s Go</span></a>' : ''; ?>
-        </div>
+<!--        <div class="content">-->
+<!--            <h1>Radius</h1>-->
+<!--            <h2>A fully responsive masonry-style<br />-->
+<!--                portfolio template.</h2>-->
+<!--            --><?php //echo (isset($isHome) && $isHome === true) ? '<a href="#" class="button big alt"><span>Let\'s Go</span></a>' : ''; ?>
+<!--        </div>-->
         <a href="/" class="button hidden"><span>Let's Go</span></a>
     </div>
 </header>

@@ -1,10 +1,12 @@
 <!-- Footer -->
 <footer id="footer">
-    <a href="#" class="info fa fa-info-circle"><span>About</span></a>
+    <a href="#" class="info fa fa-plus-circle"><span>About</span></a>
     <div class="inner">
         <div class="content">
-            <h3>Vestibulum hendrerit tortor id gravida</h3>
-            <p>In tempor porttitor nisl non elementum. Nulla ipsum ipsum, feugiat vitae vehicula vitae, imperdiet sed risus. Fusce sed dictum neque, id auctor felis. Praesent luctus sagittis viverra. Nulla erat nibh, fermentum quis enim ac, ultrices euismod augue. Proin ligula nibh, pretium at enim eget, tempor feugiat nulla.</p>
+            <h3>Vous cherchez un match ?</h3>
+            <div>
+                <a href="<?php echo \Pure\Router\Classes\Router::getCurrentRouter()->url('loginGET'); ?>" class="connect">Se connecter</a>
+            </div>
         </div>
         <div class="copyright">
             <h3>Follow me</h3>
