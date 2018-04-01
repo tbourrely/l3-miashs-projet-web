@@ -417,7 +417,7 @@ abstract class AbstractModel
         }
 
         if ($this->autoIncrement) {
-            unset($values[$this->primaryKey]);
+            unset($values[static::$primaryKey]);
         }
 
         return $values;

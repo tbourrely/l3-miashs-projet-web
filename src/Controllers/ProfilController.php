@@ -28,7 +28,8 @@ class ProfilController extends BaseController
     /**
      * Formulaire POST
      */
-    public function loginPost() {
+    public function loginPost()
+    {
         $errors = [];
 
         // test champs vide
@@ -44,9 +45,9 @@ class ProfilController extends BaseController
         if (empty($errors)) {
             // champs remplis, on peut tester si l'utilisateur existe
 
-            $result = Compte::userExists($_POST['login'], $_POST['password']);
+            $result = Compte::getByLogin($_POST['login']);
 
-            if ($result) {
+            if ($result && password_verify($_POST['password'], $result->password)) {
                 // utilisateur existe
 
                 $_SESSION['logged_in'] = 1;
@@ -69,11 +70,12 @@ class ProfilController extends BaseController
                 $errors[] = 'login ou mot de passe incorrect';
                 $_SESSION['errors']['login'] = $errors;
 
-                // redirige vers le formulaire de connexion
-                $this->redirect($this->getRouter()->url('loginGET'));
             }
 
         } // fin empty($errors)
+
+        // redirige vers le formulaire de connexion
+        $this->redirect($this->getRouter()->url('loginGET'));
     }
 
     /**
@@ -85,5 +87,70 @@ class ProfilController extends BaseController
         unset($_SESSION['user']);
 
         $this->redirect($this->getRouter()->url('home'));
+    }
+
+    public function editGet()
+    {
+        $id_user = $_SESSION['user']['idCompte'];
+
+        $user = Compte::getById($id_user);
+
+        $params = [
+            'action' => $this->getRouter()->url('editPOST'),
+            'currentEmail' => (isset($user)) ? $user->email : ''
+        ];
+
+        $this->render('memberArea/edit', $params);
+    }
+
+    public function editPost()
+    {
+        $errors = [];
+        $success = [];
+        $toUpdate = [];
+
+        if (isset($_POST['email']) && !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+            $errors[] = 'Email non valide !';
+        } else {
+            $toUpdate['email'] = 1;
+        }
+
+        if ($_POST['password'] !== $_POST['password2']) {
+            $errors[] = 'Les mots de passes doivent correspondrent !';
+        } elseif(!empty($_POST['password'] && !empty($_POST['password2']))) {
+            $toUpdate['password'] = 1;
+        }
+
+
+        $id_user = $_SESSION['user']['idCompte'];
+        $user = Compte::getById($id_user);
+
+        // email
+        if (isset($toUpdate['email'])) {
+            if ($user->email !== $_POST['email']) {
+                if ($user->updateEmail($_POST['email'])) {
+                    $success[] = 'Email mis à jour !';
+                } else {
+                    $errors[] = 'Impossible d\'utiliser cet email';
+                }
+            }
+        }
+
+        if (isset($toUpdate['password'])) {
+
+            $user->password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+            if (Compte::update($user) > 0) {
+                $success[] = 'Mot de passe mis à jour !';
+            } else {
+                $errors[] = 'Impossible de mettre à jour le mot de passe !';
+            }
+
+        }
+
+
+        $_SESSION['errors']['edit'] = $errors;
+        $_SESSION['success']['edit'] = $success;
+
+        $this->redirect($this->getRouter()->url('editGET'));
     }
 }

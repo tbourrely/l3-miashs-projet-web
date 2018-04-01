@@ -7,7 +7,7 @@
             <?php require_once __DIR__ . DIRECTORY_SEPARATOR . 'menu.php'; ?>
         </div>
 
-        <div class="s-1 e-13 h-4 row">
+        <div class="s-1 e-13 h-4">
             <div class="home--connected">
                 <div class="logo"></div>
                 <div class="home--connected__text">

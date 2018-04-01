@@ -24,7 +24,7 @@
         but hey, it's pure CSS magic.
         -->
         <ul id="menu">
-            <li><a href="#">Profil</a></li>
+            <li><a href="<?php echo \Pure\Router\Classes\Router::getCurrentRouter()->url('editGET'); ?>">Profil</a></li>
             <li><a href="#">Animaux</a></li>
             <li><a href="#">Matchs</a></li>
             <li><a href="<?php echo \Pure\Router\Classes\Router::getCurrentRouter()->url('logout'); ?>">Déconnexion</a></li>

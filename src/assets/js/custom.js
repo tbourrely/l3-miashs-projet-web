@@ -6,7 +6,7 @@
         errors
     */
     // -> click on cross
-    $('.errors__message__close__cross').click(function(e) {
+    $('.message__close__cross').click(function(e) {
         e.preventDefault();
         e.stopPropagation();
 
@@ -14,8 +14,16 @@
         $($error_parent).hide('slow');
     });
 
+    // -> click on message
+    $('.message').click(function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        $(this).hide('slow');
+    });
+
     // -> show errors
-    $('.errors__message.hidden').show('slow', function() {
+    $('.message.hidden').show('slow', function() {
         $(this).removeClass('hidden');
     });
 

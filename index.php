@@ -72,7 +72,12 @@ $router->get('/profil/:id', \App\Controllers\ProfilController::class . ':index',
 $router->get('/login', \App\Controllers\ProfilController::class . ':loginGet', 'loginGET');
 $router->post('/login', \App\Controllers\ProfilController::class . ':loginPost', 'loginPOST');
 
+// -> logout
 $router->get('/logout', \App\Controllers\ProfilController::class . ':logout', 'logout');
+
+// gestion profil
+$router->get('/edit', App\Controllers\ProfilController::class . ':editGet', 'editGET');
+$router->post('/edit', App\Controllers\ProfilController::class . ':editPost', 'editPOST');
 
 
 $router->run();

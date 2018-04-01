@@ -33,17 +33,34 @@
 
 <?php //var_dump($_SESSION); ?>
 
-<div class="errors">
-    <?php if (isset($_SESSION['errors']['login'])) : ?>
-        <?php foreach ($_SESSION['errors']['login'] as $errorMessage) : ?>
-            <div class="errors__message hidden">
-                <div class="errors__message__inner">
-                    <?php echo $errorMessage; ?>
+<div class="message-container">
+    <?php if (isset($_SESSION['errors'])) : ?>
+        <?php foreach ($_SESSION['errors'] as $errorType) : ?>
+            <?php foreach ($errorType as $errorMessage) : ?>
+                <div class="message hidden">
+                    <div class="message__inner">
+                        <?php echo $errorMessage; ?>
+                    </div>
+                    <div class="message__close"><a class="message__close__cross" href="#"><i class="fa fa-remove"></i></a></div>
                 </div>
-                <div class="errors__message__close"><a class="errors__message__close__cross" href="#"><i class="fa fa-remove"></i></a></div>
-            </div>
+            <?php endforeach; ?>
         <?php endforeach; ?>
 
-        <?php unset($_SESSION['errors']['login']); ?>
+        <?php unset($_SESSION['errors']); ?>
+    <?php endif; ?>
+
+    <?php if (isset($_SESSION['success'])) : ?>
+        <?php foreach ($_SESSION['success'] as $succesType) : ?>
+            <?php foreach ($succesType as $successMessage) : ?>
+                <div class="message success hidden">
+                    <div class="message__inner">
+                        <?php echo $successMessage; ?>
+                    </div>
+                    <div class="message__close"><a class="message__close__cross" href="#"><i class="fa fa-remove"></i></a></div>
+                </div>
+            <?php endforeach; ?>
+        <?php endforeach; ?>
+
+        <?php unset($_SESSION['success']); ?>
     <?php endif; ?>
 </div>
