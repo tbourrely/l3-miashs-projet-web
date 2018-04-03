@@ -153,4 +153,22 @@ class ProfilController extends BaseController
 
         $this->redirect($this->getRouter()->url('editGET'));
     }
+
+    public function editAnimauxGet()
+    {
+        $id_user = $_SESSION['user']['idCompte'];
+        $user = Compte::getById($id_user);
+
+        // pas de user
+        if (!$user) {
+            $this->redirect('home');
+        }
+
+        /**
+         * @var $user Compte
+         */
+        $animals = $user->getAnimals();
+
+        $this->render('memberArea/editAnimals', ['animals' => $animals]);
+    }
 }

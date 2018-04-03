@@ -46,7 +46,7 @@ class BaseController
      * @param $filename
      * @param array $args
      */
-    public function render($filename, array $args)
+    public function render($filename, array $args = [])
     {
         $template = $this->templateEngine->load($filename);
 

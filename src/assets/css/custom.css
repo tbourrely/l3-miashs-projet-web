@@ -1,7 +1,13 @@
 /* general */
+body {
+    overflow-x:hidden;
+}
 
 .h-100 {
     height: 100%;
+}
+.w-100 {
+    width: 100%;
 }
 
 .inline-block {
@@ -38,6 +44,98 @@ input[type='submit']:hover {
 
 
 
+/* edit animal */
+.animal {
+    position: relative;
+    font-size: 1.1em;
+    box-shadow: 0 0 4px #BCBFBF;
+    padding: 2em 1em;
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    background-color: white;
+    z-index: 0;
+    transition: all .2s ease-in-out;
+}
+
+.animal:hover {
+    transform: scale(1.09);
+    z-index: 1;
+}
+
+.animal:not(first-of-type) {
+    margin-top: 10px;
+}
+
+.animal__photo {
+    vertical-align: top;
+    width: 150px;
+    height: 150px;
+    border-radius: 100%;
+    box-shadow: 0 0 5px #7E7F7F;
+}
+
+.animal__infos {
+    height: 150px;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-left: 7em;
+}
+
+.animal__type__inner,
+.animal__nom__inner,
+.animal__race__inner,
+.animal__age__inner,
+.animal__ville__inner {
+    font-weight: bolder;
+}
+
+.animal-content-container {
+    padding: 20px 0 90px 0;
+}
+
+.animal__delete {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    height: 14px;
+    line-height: 0;
+}
+
+.animal__delete__inner {
+    font-size: 14px;
+}
+
+.animal-add {
+    margin-top: 2em;
+    margin-left: 6em;
+}
+
+.animal-add__link {
+    text-decoration: none;
+    display: inline-block;
+    width: 100px;
+    height: 50px;
+    text-align: center;
+    line-height: 50px;
+    font-size: 15px;
+    background-color: #e74c3c;
+    color: white;
+    border-radius: 20px;
+    font-weight: bolder;
+    transition: all .4s;
+}
+
+.animal-add__link:hover {
+    background-color: #BF3F32;
+    color: white;
+    box-shadow: 0 0 4px #BFB2A8;
+}
+
 /* edit profil */
 .profil-edit {
     width: 100%;
@@ -70,6 +168,7 @@ input[type='submit']:hover {
     align-self: center;
     width: 30%;
 }
+
 
 
 /* footer */

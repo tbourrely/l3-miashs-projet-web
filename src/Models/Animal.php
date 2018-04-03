@@ -1,6 +1,6 @@
 <?php
 /**
- * File "Compte.php"
+ * File "Animal.php"
  * @author Thomas Bourrely
  * 28/03/2018
  */
@@ -9,11 +9,11 @@ namespace App\Models;
 
 use Pure\ORM\AbstractClasses\AbstractModel;
 
-class Compte extends AbstractModel
+class Animal extends AbstractModel
 {
-    protected static $table = 'Compte';
-    protected static $primaryKey = 'idCompte';
-    protected $allowedFields = array('idCompte', 'email', 'password', 'login');
+    protected static $table = 'Animal';
+    protected static $primaryKey = 'idAnimal';
+    protected $allowedFields = array('idAnimal', 'nom', 'age', 'type', 'race', 'ville', 'photo', 'idCompte');
 
     public static function getByLogin($login)
     {
@@ -55,8 +55,5 @@ class Compte extends AbstractModel
         return false;
     }
 
-    public function getAnimals()
-    {
-        return $animals = $this->hasMany('App\Models\Animal', 'idCompte', 'idCompte');
-    }
+
 }

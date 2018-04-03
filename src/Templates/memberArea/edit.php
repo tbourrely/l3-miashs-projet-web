@@ -7,6 +7,7 @@
 
     <div class="s-1 e-13 h-4">
         <div class="profil-edit">
+            <h2>Modification de votre profil</h2>
             <form class="profil-edit__form" action="<?php echo $action;?>" method="POST">
                 <label for="email" class="text--medium fw-400">Email</label>
                 <input type="email" id="email" name="email" value="<?= $currentEmail ?>">

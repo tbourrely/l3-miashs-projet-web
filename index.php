@@ -80,5 +80,8 @@ $router->get('/edit', App\Controllers\ProfilController::class . ':editGet', 'edi
 $router->post('/edit', App\Controllers\ProfilController::class . ':editPost', 'editPOST');
 
 
+$router->get('/edit/animaux', App\Controllers\ProfilController::class . ':editAnimauxGet', 'editAnimauxGET');
+
+
 $router->run();
 // ----------------------------------------------------------------------------------------
