@@ -92,8 +92,11 @@ $router->post('/edit', App\Controllers\ProfilController::class . ':editPost', 'e
 
 // gestion animaux
 $router->get('/edit/animaux', App\Controllers\ProfilController::class . ':editAnimauxGet', 'editAnimauxGET');
+
 $router->get('/edit/animaux/add', App\Controllers\ProfilController::class . ':addAnimauxGet', 'addAnimauxGET');
 $router->post('/edit/animaux/add', App\Controllers\ProfilController::class . ':addAnimauxPost', 'addAnimauxPOST');
+
+$router->get('edit/animaux/delete/:id', \App\Controllers\ProfilController::class . ':deleteAnimal', 'deleteAnimal');
 
 $router->run();
 // ----------------------------------------------------------------------------------------

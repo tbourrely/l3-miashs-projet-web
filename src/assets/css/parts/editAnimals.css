@@ -29,6 +29,24 @@
     height: 150px;
     border-radius: 100%;
     box-shadow: 0 0 5px #7E7F7F;
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+}
+
+.animal__photo__inner {
+    position: absolute;
+
+    max-width: 130%;
+    max-height: 130%;
+
+    z-index: 0;
+
+    width: auto;
+    height: auto;
+
+    margin: 50% 0 0 50%;
+    transform: translate(-50%, -50%);
 }
 
 .animal__infos {

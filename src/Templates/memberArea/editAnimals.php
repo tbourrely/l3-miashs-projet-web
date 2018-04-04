@@ -13,7 +13,9 @@
                 <?php foreach ($animals as $animal) : ?>
 
                     <div class="animal">
-                        <img class="animal__photo" src="<?= $animal->photo; ?>" alt="Photo de l'animal">
+                        <div class="animal__photo">
+                            <img class="animal__photo__inner" src="<?= $animal->photo; ?>" alt="Photo de l'animal">
+                        </div>
                         <div class="animal__infos">
                             <div class="animal__type ">Type : <span class="animal__type__inner"><?= ucfirst(strtolower($animal->type)); ?></span></div>
                             <div class="animal__nom">Nom : <span class="animal__nom__inner"><?= $animal->nom; ?></span></div>
@@ -22,7 +24,7 @@
                             <div class="animal__ville">Ville : <span class="animal__ville__inner"><?= ucfirst($animal->ville); ?></span></div>
                         </div>
 
-                        <a href="/edit/animal/delete/<?= $animal->idAnimal; ?>" class="animal__delete"><span class="animal__delete__inner fa fa-close"></span></a>
+                        <a href="<?= \Pure\Router\Classes\Router::getCurrentRouter()->url('deleteAnimal', ['id' => $animal->idAnimal]); ?>" class="animal__delete"><span class="animal__delete__inner fa fa-close"></span></a>
                     </div>
 
                 <?php endforeach; ?>

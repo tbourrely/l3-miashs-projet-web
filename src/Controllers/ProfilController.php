@@ -249,4 +249,36 @@ class ProfilController extends BaseController
 
         $this->redirect($this->getRouter()->url('addAnimauxGET'));
     }
+
+    public function deleteAnimal($id)
+    {
+        $errors = [];
+        $success = [];
+
+
+        if (!is_numeric($id)) {
+            $errors[] = 'id animal invalide';
+        } else {
+            // id valide
+
+            $animal = Animal::exists($id);
+
+            if (!$animal) {
+                $errors[] = 'Aucun animal avec cet id';
+            } else {
+                // animal trouvé
+
+                if (Animal::delete($animal) === 1) {
+                    $success[] = 'Animal supprimé !';
+                }
+            }
+
+        }
+
+        // redirect
+        $_SESSION['errors']['addAnimal'] = $errors;
+        $_SESSION['success']['addAnimal'] = $success;
+
+        $this->redirect($this->getRouter()->url('editAnimauxGET'));
+    }
 }
