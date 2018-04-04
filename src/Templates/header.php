@@ -9,11 +9,12 @@
     <title>Radius by TEMPLATED</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="/src/assets/css/main.css" />
-    <link rel="stylesheet" href="/src/assets/css/grid.css">
-    <link rel="stylesheet" href="/src/assets/css/menu.css">
-    <link rel="stylesheet" href="/src/assets/css/custom.css" />
-    <link rel="stylesheet" href="/src/assets/css/menu.css">
+    <link rel="stylesheet" type="text/css" href="/src/assets/css/city-autocomplete.min.css">
+    <link rel="stylesheet" type="text/css" href="/src/assets/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="/src/assets/css/grid.css">
+    <link rel="stylesheet" type="text/css" href="/src/assets/css/menu.css">
+    <link rel="stylesheet" type="text/css" href="/src/assets/css/custom.css" />
+    <link rel="stylesheet" type="text/css" href="/src/assets/css/menu.css">
 </head>
 <body>
 

@@ -7,6 +7,7 @@
 
 namespace App\Controllers;
 
+use App\Models\Animal;
 use App\Models\Compte;
 use Pure\Controllers\Classes\BaseController;
 
@@ -187,5 +188,65 @@ class ProfilController extends BaseController
     public function addAnimauxGet()
     {
         $this->render('memberArea/addAnimals');
+    }
+
+    /**
+     * Formulaire d'ajout d'un animal POST
+     */
+    public function addAnimauxPost()
+    {
+        $errors = [];
+        $success = [];
+
+        if (
+            !isset(
+                $_POST['nom'],
+                $_POST['type'],
+                $_POST['age'],
+                $_POST['race'],
+                $_POST['ville']
+            )
+        ) {
+            $errors[] = "Veuillez de renseigner tous les champs !";
+        }
+
+        if (empty($errors)) {
+
+            $fields = array(
+                'nom' => $_POST['nom'],
+                'age' => $_POST['age'],
+                'type' => $_POST['type'],
+                'race' => $_POST['race'],
+                'ville' => $_POST['ville'],
+                'photo' => '/data/img/animaux/default.png',
+                'idCompte' => $_SESSION['user']['idCompte']
+            );
+
+            // upload image
+            if ($_FILES['photo']['error'] === UPLOAD_ERR_OK) {
+                $destination = UPLOADS . DIRECTORY_SEPARATOR . $_FILES['photo']['name'];
+                $tmp = $_FILES['photo']['tmp_name'];
+
+                if (move_uploaded_file($tmp, $destination)) {
+                    $fields['photo'] = UPLOADS_WEB . $_FILES['photo']['name'];
+                }
+            }
+
+            // insert
+            $animal = new Animal($fields);
+
+            if (Animal::insert($animal)) {
+                $success[] = 'Animal ajouté !';
+            } else {
+                $errors[] = "Impossible d'ajouter l'animal !";
+            }
+
+        }
+
+        // redirect
+        $_SESSION['errors']['addAnimal'] = $errors;
+        $_SESSION['success']['addAnimal'] = $success;
+
+        $this->redirect($this->getRouter()->url('addAnimauxGET'));
     }
 }

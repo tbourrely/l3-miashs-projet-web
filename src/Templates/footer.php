@@ -22,11 +22,16 @@
 </footer>
 
 <!-- Scripts -->
-<script src="/src/assets/js/jquery.min.js"></script>
-<script src="/src/assets/js/skel.min.js"></script>
-<script src="/src/assets/js/util.js"></script>
-<script src="/src/assets/js/main.js"></script>
-<script src="/src/assets/js/custom.js"></script>
+<script type="text/javascript" src="//maps.googleapis.com/maps/api/js?key=AIzaSyBaWkAFg4F6jFxM8AFsKoNy7g8guvBpaoM&libraries=places&language=en"></script>
+<script type="text/javascript" src="/src/assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="/src/assets/js/jquery.city-autocomplete.min.js"></script>
+<script type="text/javascript" src="/src/assets/js/skel.min.js"></script>
+
+<script type="text/javascript" src="/src/assets/js/util.js"></script>
+<script type="text/javascript" src="/src/assets/js/main.js"></script>
+<script type="text/javascript" src="/src/assets/js/custom.js"></script>
+
+
 
 </body>
 </html>

@@ -65,4 +65,9 @@
         return false;
     }
 
+
+
+    // city autocomplete
+    $('input#ville').cityAutocomplete({});
+
 })(jQuery);

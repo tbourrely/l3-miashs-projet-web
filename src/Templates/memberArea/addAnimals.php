@@ -7,7 +7,7 @@
 
     <div class="s-4 e-10 h-4 animal-add-container" style="">
 
-        <form class="add-animal-form" action="#" method="POST" enctype="multipart/form-data">
+        <form class="add-animal-form" action="<?= \Pure\Router\Classes\Router::getCurrentRouter()->url('addAnimauxPOST'); ?>" method="POST" enctype="multipart/form-data">
             <label class="add-animal-form__label" for="nom">Nom</label>
             <input class="add-animal-form__nom" id="nom" type="text" name="nom" placeholder="..." required>
 
@@ -25,9 +25,9 @@
             <input class="add-animal-form__race" id="race" type="text" name="race" placeholder="..." required>
 
             <label class="add-animal-form__label" for="ville">Ville</label>
-            <input class="add-animal-form__ville" id="ville" type="text" name="ville" placeholder="..." required>
+            <input class="add-animal-form__ville" id="ville" type="text" name="ville" placeholder="..." autocomplete="off" data-country="fr" required>
 
-            <input class="add-animal-form__photo" id="photo" type="file" name="photo" required>
+            <input class="add-animal-form__photo" id="photo" type="file" name="photo">
             <label class="add-animal-form__label" for="photo">Choisissez une image...</label>
 
             <div class="add-animal-form__submit">

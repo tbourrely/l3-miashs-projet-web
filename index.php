@@ -53,6 +53,17 @@ $db_ini = __DIR__ . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'conf' .
 // ----------------------------------------------------------------------------------------
 
 
+/**
+ * CONSTANTES
+ */
+// absolute links
+define('BASE', __DIR__);
+define('DATA', BASE . DIRECTORY_SEPARATOR . 'data');
+define('UPLOADS',  DATA . DIRECTORY_SEPARATOR . 'img' . DIRECTORY_SEPARATOR . 'uploads');
+
+// links for web
+define('UPLOADS_WEB', '/data/img/uploads/');
+
 // ----------------------------------------------------------------------------------------
 /*
  * ROUTER
@@ -81,7 +92,8 @@ $router->post('/edit', App\Controllers\ProfilController::class . ':editPost', 'e
 
 // gestion animaux
 $router->get('/edit/animaux', App\Controllers\ProfilController::class . ':editAnimauxGet', 'editAnimauxGET');
-$router->get('edit/animaux/add', App\Controllers\ProfilController::class . ':addAnimauxGet', 'addAnimauxGET');
+$router->get('/edit/animaux/add', App\Controllers\ProfilController::class . ':addAnimauxGet', 'addAnimauxGET');
+$router->post('/edit/animaux/add', App\Controllers\ProfilController::class . ':addAnimauxPost', 'addAnimauxPOST');
 
 $router->run();
 // ----------------------------------------------------------------------------------------

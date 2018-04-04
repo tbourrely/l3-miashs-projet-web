@@ -413,6 +413,10 @@ abstract class AbstractModel
     {
         $values = [];
         foreach ($this->allowedFields as $field) {
+
+            if (!isset($this->$field) && $this->autoIncrement && $field === static::$primaryKey)
+                continue;
+
             $values[$field] = $this->$field;
         }
 
