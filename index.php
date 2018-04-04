@@ -74,7 +74,7 @@ $router = new Router($_GET['url']);
 $router->get('/',\App\Controllers\HomeController::class . ':home', 'home');
 
 // profil
-$router->get('/profil/:id', \App\Controllers\ProfilController::class . ':index', 'profilIndex');
+//$router->get('/profil/:id', \App\Controllers\ProfilController::class . ':index', 'profilIndex');
 
 
 
@@ -87,16 +87,16 @@ $router->post('/login', \App\Controllers\ProfilController::class . ':loginPost',
 $router->get('/logout', \App\Controllers\ProfilController::class . ':logout', 'logout');
 
 // gestion profil
-$router->get('/edit', App\Controllers\ProfilController::class . ':editGet', 'editGET');
-$router->post('/edit', App\Controllers\ProfilController::class . ':editPost', 'editPOST');
+$router->get('/edit', App\Controllers\ProfilController::class . ':editGet', 'editGET')->withMiddleWare(new \App\Middlewares\UserConnected());
+$router->post('/edit', App\Controllers\ProfilController::class . ':editPost', 'editPOST')->withMiddleWare(new \App\Middlewares\UserConnected());
 
 // gestion animaux
-$router->get('/edit/animaux', App\Controllers\ProfilController::class . ':editAnimauxGet', 'editAnimauxGET');
+$router->get('/edit/animaux', App\Controllers\ProfilController::class . ':editAnimauxGet', 'editAnimauxGET')->withMiddleWare(new \App\Middlewares\UserConnected());
 
-$router->get('/edit/animaux/add', App\Controllers\ProfilController::class . ':addAnimauxGet', 'addAnimauxGET');
-$router->post('/edit/animaux/add', App\Controllers\ProfilController::class . ':addAnimauxPost', 'addAnimauxPOST');
+$router->get('/edit/animaux/add', App\Controllers\ProfilController::class . ':addAnimauxGet', 'addAnimauxGET')->withMiddleWare(new \App\Middlewares\UserConnected());
+$router->post('/edit/animaux/add', App\Controllers\ProfilController::class . ':addAnimauxPost', 'addAnimauxPOST')->withMiddleWare(new \App\Middlewares\UserConnected());
 
-$router->get('edit/animaux/delete/:id', \App\Controllers\ProfilController::class . ':deleteAnimal', 'deleteAnimal');
+$router->get('edit/animaux/delete/:id', \App\Controllers\ProfilController::class . ':deleteAnimal', 'deleteAnimal')->withMiddleWare(new \App\Middlewares\UserConnected());
 
 $router->run();
 // ----------------------------------------------------------------------------------------

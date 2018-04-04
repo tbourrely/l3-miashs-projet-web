@@ -23,6 +23,11 @@ class ProfilController extends BaseController
      */
     public function loginGet()
     {
+        // redirige si connecté
+        if (isset($_SESSION['logged_in'])) {
+            $this->redirect($this->getRouter()->url('home'));
+        }
+
         $this->render('memberArea/login', ['action' => $this->getRouter()->url('loginPOST')]);
     }
 
@@ -31,6 +36,11 @@ class ProfilController extends BaseController
      */
     public function loginPost()
     {
+        // redirige si connecté
+        if (isset($_SESSION['logged_in'])) {
+            $this->redirect($this->getRouter()->url('home'));
+        }
+
         $errors = [];
 
         // test champs vide
@@ -250,6 +260,11 @@ class ProfilController extends BaseController
         $this->redirect($this->getRouter()->url('addAnimauxGET'));
     }
 
+    /**
+     * supprime un animal
+     *
+     * @param $id
+     */
     public function deleteAnimal($id)
     {
         $errors = [];
@@ -268,7 +283,9 @@ class ProfilController extends BaseController
             } else {
                 // animal trouvé
 
-                if (Animal::delete($animal) === 1) {
+                $idCompte = $_SESSION['user']['idCompte'];
+
+                if ($idCompte === $animal->idCompte && Animal::delete($animal) === 1) {
                     $success[] = 'Animal supprimé !';
                 }
             }
