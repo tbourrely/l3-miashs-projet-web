@@ -1,0 +1,14 @@
+/* homepage */
+.home--connected {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
+
+.home--connected .username {
+    color: #E74C3C;
+    font-weight: 400;
+}

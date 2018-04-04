@@ -1,0 +1,16 @@
+/* footer */
+#footer .inner .content .connect {
+    text-decoration: none;
+    border: solid 1px white;
+    padding: 1em;
+    background-color: whitesmoke;
+    color: #E74C3C;
+    font-weight: 400;
+    border-radius: 100px;
+    transition: all .6s ease-out;
+}
+
+#footer .inner .content .connect:hover {
+    color: whitesmoke;
+    background-color: #E74C3C;
+}

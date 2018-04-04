@@ -9,12 +9,26 @@
     <title>Radius by TEMPLATED</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- dependencies -->
     <link rel="stylesheet" type="text/css" href="/src/assets/css/city-autocomplete.min.css">
+
+    <!-- main stylesheets -->
     <link rel="stylesheet" type="text/css" href="/src/assets/css/main.css" />
     <link rel="stylesheet" type="text/css" href="/src/assets/css/grid.css">
-    <link rel="stylesheet" type="text/css" href="/src/assets/css/menu.css">
+    <link rel="stylesheet" type="text/css" href="/src/assets/css/parts/menu.css">
     <link rel="stylesheet" type="text/css" href="/src/assets/css/custom.css" />
-    <link rel="stylesheet" type="text/css" href="/src/assets/css/menu.css">
+
+    <!-- parts -->
+    <link rel="stylesheet" type="text/css" href="/src/assets/css/parts/addAnimals.css">
+    <link rel="stylesheet" type="text/css" href="/src/assets/css/parts/editAnimals.css">
+    <link rel="stylesheet" type="text/css" href="/src/assets/css/parts/editProfile.css">
+    <link rel="stylesheet" type="text/css" href="/src/assets/css/parts/footer.css">
+    <link rel="stylesheet" type="text/css" href="/src/assets/css/parts/homepage.css">
+    <link rel="stylesheet" type="text/css" href="/src/assets/css/parts/loginForm.css">
+    <link rel="stylesheet" type="text/css" href="/src/assets/css/parts/logo.css">
+    <link rel="stylesheet" type="text/css" href="/src/assets/css/parts/menu.css">
+    <link rel="stylesheet" type="text/css" href="/src/assets/css/parts/messages.css">
 </head>
 <body>
 
@@ -22,12 +36,6 @@
 <header id="header"
         class="preview">
     <div class="inner">
-<!--        <div class="content">-->
-<!--            <h1>Radius</h1>-->
-<!--            <h2>A fully responsive masonry-style<br />-->
-<!--                portfolio template.</h2>-->
-<!--            --><?php //echo (isset($isHome) && $isHome === true) ? '<a href="#" class="button big alt"><span>Let\'s Go</span></a>' : ''; ?>
-<!--        </div>-->
         <a href="/" class="button hidden"><span>Let's Go</span></a>
     </div>
 </header>

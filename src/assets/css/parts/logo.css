@@ -1,0 +1,10 @@
+/* logo */
+.logo {
+    width: 25%;
+}
+
+.logo:before {
+    content: url('/src/assets/img/logo.svg');
+    display: block;
+    width: 100%;
+}

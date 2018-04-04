@@ -1,0 +1,31 @@
+/* edit profil */
+.profil-edit {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.profil-edit__form {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.profil-edit__form label {
+    margin: 0;
+    padding: 0;
+}
+
+.profil-edit__form input:not(:last-of-type) {
+    margin-bottom: 20px;
+    margin-top: 5px;
+}
+
+.profil-edit__form input[type='submit'] {
+    align-self: center;
+    width: 30%;
+}
