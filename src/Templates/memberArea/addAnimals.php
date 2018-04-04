@@ -9,7 +9,7 @@
 
         <form class="add-animal-form" action="#" method="POST" enctype="multipart/form-data">
             <label class="add-animal-form__label" for="nom">Nom</label>
-            <input class="add-animal-form__nom" id="nom" type="text" name="nom" required>
+            <input class="add-animal-form__nom" id="nom" type="text" name="nom" placeholder="..." required>
 
             <label class="add-animal-form__label" for="type">Type</label>
             <select class="add-animal-form__type" id="type" name="type" required>
@@ -19,13 +19,13 @@
             </select>
 
             <label class="add-animal-form__label" for="age">Age</label>
-            <input class="add-animal-form__age" id="age" type="number" min="0" max="100" name="age" value="0" required>
+            <input class="add-animal-form__age" id="age" type="number" min="0" max="100" name="age" placeholder="0" required>
 
             <label class="add-animal-form__label" for="race">Race</label>
-            <input class="add-animal-form__race" id="race" type="text" name="race" required>
+            <input class="add-animal-form__race" id="race" type="text" name="race" placeholder="..." required>
 
             <label class="add-animal-form__label" for="ville">Ville</label>
-            <input class="add-animal-form__ville" id="ville" type="text" name="ville" required>
+            <input class="add-animal-form__ville" id="ville" type="text" name="ville" placeholder="..." required>
 
             <input class="add-animal-form__photo" id="photo" type="file" name="photo" required>
             <label class="add-animal-form__label" for="photo">Choisissez une image...</label>

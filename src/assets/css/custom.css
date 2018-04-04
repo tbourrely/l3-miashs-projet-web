@@ -122,7 +122,7 @@ input[type='submit']:hover {
     display: inline-flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
     width: 100%;
     background-color: white;
     z-index: 0;
@@ -150,9 +150,9 @@ input[type='submit']:hover {
     height: 150px;
     display: inline-flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
     align-items: flex-start;
-    margin-left: 7em;
+
     font-size: 19px;
 }
 
