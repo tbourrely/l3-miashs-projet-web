@@ -18,7 +18,7 @@ class ProfilController extends BaseController
     }
 
     /**
-     * Formulaire GET
+     * Formulaire connexion GET
      */
     public function loginGet()
     {
@@ -26,7 +26,7 @@ class ProfilController extends BaseController
     }
 
     /**
-     * Formulaire POST
+     * Formulaire connexion POST
      */
     public function loginPost()
     {
@@ -89,6 +89,9 @@ class ProfilController extends BaseController
         $this->redirect($this->getRouter()->url('home'));
     }
 
+    /**
+     * Formulaire modification profil GET
+     */
     public function editGet()
     {
         $id_user = $_SESSION['user']['idCompte'];
@@ -103,6 +106,9 @@ class ProfilController extends BaseController
         $this->render('memberArea/edit', $params);
     }
 
+    /**
+     * Formulaire modification profil POST
+     */
     public function editPost()
     {
         $errors = [];
@@ -154,6 +160,9 @@ class ProfilController extends BaseController
         $this->redirect($this->getRouter()->url('editGET'));
     }
 
+    /**
+     * Page de gestion des animaux
+     */
     public function editAnimauxGet()
     {
         $id_user = $_SESSION['user']['idCompte'];
@@ -170,5 +179,13 @@ class ProfilController extends BaseController
         $animals = $user->getAnimals();
 
         $this->render('memberArea/editAnimals', ['animals' => $animals]);
+    }
+
+    /**
+     * Formulaire d'ajout d'un animal GET
+     */
+    public function addAnimauxGet()
+    {
+        $this->render('memberArea/addAnimals');
     }
 }

@@ -3,6 +3,14 @@ body {
     overflow-x:hidden;
 }
 
+label {
+    font-weight: 400;
+}
+
+.container {
+    font-size: 20px;
+}
+
 .h-100 {
     height: 100%;
 }
@@ -30,26 +38,87 @@ input[type='submit'] {
     border: solid;
     background-color: #e74c3c;
     color: white;
-
-    height: 2.95em;
-    font-size: 1em;
-    line-height: 1em;
-
     border-radius: 7px;
+    height: auto;
+    font-weight: 400;
 }
 
 input[type='submit']:hover {
     background-color: #CC0000;
 }
 
+/* add animal */
+.animal-add-container {
+    padding: 1em 0;
+}
+
+.add-animal-form__label {
+    margin: 0;
+    padding: 0;
+}
+
+.add-animal-form__label:not(:first-of-type) {
+    margin-top: 1em;
+    margin-bottom: .3em;
+}
+
+
+.add-animal-form__photo {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+.add-animal-form__photo + label {
+    font-size: 15px;
+    padding: 10px;
+    font-weight: 400;
+    color: white;
+    background-color: #997965;
+    display: inline-block;
+    cursor: pointer;
+    border-radius: .3em;
+    text-align: center;
+    transition: background-color .4s;
+}
+
+.add-animal-form__photo.uploaded + label {
+    background-color: #CC6321!important;
+}
+
+.add-animal-form__photo:focus + label,
+.add-animal-form__photo + label:hover {
+    background-color: #BF3F32;
+}
+
+.add-animal-form__photo:focus {
+    outline: 1px dotted #000;
+    outline: -webkit-focus-ring-color auto 5px;
+}
+
+.add-animal-form__submit {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.add-animal-form__submit input[type="submit"] {
+    display: block;
+    margin-top: 2em;
+}
 
 
 /* edit animal */
 .animal {
     position: relative;
-    font-size: 1.1em;
     box-shadow: 0 0 4px #BCBFBF;
-    padding: 2em 1em;
+    font-size: 1em;
+    padding: 1em 1em;
     display: inline-flex;
     flex-direction: row;
     align-items: center;
@@ -84,6 +153,7 @@ input[type='submit']:hover {
     justify-content: space-between;
     align-items: flex-start;
     margin-left: 7em;
+    font-size: 19px;
 }
 
 .animal__type__inner,
@@ -164,7 +234,6 @@ input[type='submit']:hover {
 }
 
 .profil-edit__form input[type='submit'] {
-    font-weight: bolder;
     align-self: center;
     width: 30%;
 }

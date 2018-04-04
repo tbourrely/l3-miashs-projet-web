@@ -33,7 +33,7 @@
 
     <div class="s-9 e-13">
         <div class="animal-add">
-            <a href="#" class="animal-add__link">Ajouter</a>
+            <a href="<?= \Pure\Router\Classes\Router::getCurrentRouter()->url('addAnimauxGET'); ?>" class="animal-add__link">Ajouter</a>
         </div>
     </div>
 </div>

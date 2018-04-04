@@ -79,9 +79,9 @@ $router->get('/logout', \App\Controllers\ProfilController::class . ':logout', 'l
 $router->get('/edit', App\Controllers\ProfilController::class . ':editGet', 'editGET');
 $router->post('/edit', App\Controllers\ProfilController::class . ':editPost', 'editPOST');
 
-
+// gestion animaux
 $router->get('/edit/animaux', App\Controllers\ProfilController::class . ':editAnimauxGet', 'editAnimauxGET');
-
+$router->get('edit/animaux/add', App\Controllers\ProfilController::class . ':addAnimauxGet', 'addAnimauxGET');
 
 $router->run();
 // ----------------------------------------------------------------------------------------
