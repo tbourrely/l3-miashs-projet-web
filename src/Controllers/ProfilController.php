@@ -23,26 +23,29 @@ class ProfilController extends BaseController
             $errors[] = 'id non valide';
         } else {
 
+            $maxPk = Animal::maxPk("idCompte != $idUser");
+            $minPk = Animal::minPk("idCompte != $idUser");
+
             if ($id === 'latest') {
-                $criteria = "idCompte = $idUser";
-                $id = Animal::maxPk($criteria);
+                $id = $maxPk;
             }
 
             $animal = Animal::exists($id);
 
-            if (!$animal || (isset($animal->idCompte) && $animal->idCompte !== $idUser)) {
+            if (!$animal || (isset($animal->idCompte) && $animal->idCompte === $idUser)) {
                 // pas d'animal avec cet id
                 $errors[] = 'Aucun animal trouvé correspondant aux critères !';
             } else {
                 // animal trouvé
 
-                // + récent au + ancien
-                $urls = $this->getProfileUrls($animal, $idUser);
+                // previous : + récent, next : + ancien
+                $previous = $this->previousProfile($animal->idAnimal + 1, $idUser, $maxPk);
+                $next = $this->nextProfile($animal->idAnimal - 1, $idUser, $minPk);
 
                 $params = [
                     'animal'        => $animal,
-                    'previousUrl'   => $urls[0],
-                    'nextUrl'       => $urls[1]
+                    'previousUrl'   => $this->getRouter()->url('profileGET', ['id' => $previous]),
+                    'nextUrl'       => $this->getRouter()->url('profileGET', ['id' => $next])
                 ];
                 $this->render('profil', $params);
             }
@@ -57,41 +60,56 @@ class ProfilController extends BaseController
     }
 
     /**
-     * Créé les liens vers les profils suivants/précédents
-     * + récent au + ancien
+     * Recupere l'id du profil précédent (+récent)
+     * Recursive
      *
-     * @param $id
+     * @param $idAnimal
      * @param $idUser
-     * @return array
+     * @param $maxPk
+     * @return string
      */
-    private function getProfileUrls($animal, $idUser)
+    private function previousProfile($idAnimal, $idUser, $maxPk)
     {
-        // 0 -> previous, 1 -> next
-        $res = ['#', '#'];
-        $idList = [];
+        $res = '';
 
-        $idAnimal = $animal->idAnimal;
+        if ($idAnimal >= $maxPk) {
+            $res = $maxPk;
+        } else {
+            $animal = Animal::where("idCompte != $idUser AND idAnimal = $idAnimal");
 
-        $animaux = Animal::where("idCompte = $idUser");
-
-        foreach ($animaux->getIterator() as $ani) {
-            $idList[] = $ani->idAnimal;
+            if ($animal->count() === 0) {
+                $res = $this->previousProfile($idAnimal + 1, $idUser, $maxPk);
+            } else {
+                $res = $idAnimal;
+            }
         }
 
-        $currIdOffset = array_search($idAnimal, $idList);
+        return $res;
+    }
 
-        // previous
-        if ($currIdOffset + 1 >= count($idList)) {
-            $res[0] = 'latest';
-        } else {
-            $res[0] = $idList[$currIdOffset + 1];
-        }
+    /**
+     * Récupère l'id du profil suivant (+ancien)
+     * Recursive
+     *
+     * @param $idAnimal
+     * @param $idUser
+     * @param $minPk
+     * @return string
+     */
+    private function nextProfile($idAnimal, $idUser, $minPk)
+    {
+        $res = '';
 
-        // next
-        if ($currIdOffset - 1 < 0) {
-            $res[1] = 'latest';
+        if ($idAnimal <= $minPk) {
+            $res = $minPk;
         } else {
-            $res[1] = $idList[$currIdOffset - 1];
+            $animal = Animal::where("idCompte != $idUser AND idAnimal = $idAnimal");
+
+            if ($animal->count() === 0) {
+                $res = $this->nextProfile($idAnimal - 1, $idUser, $minPk);
+            } else {
+                $res = $idAnimal;
+            }
         }
 
         return $res;
