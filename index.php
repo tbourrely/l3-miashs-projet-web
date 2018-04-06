@@ -77,7 +77,6 @@ $router->get('/',\App\Controllers\HomeController::class . ':home', 'home');
 //$router->get('/profil/:id', \App\Controllers\ProfilController::class . ':index', 'profilIndex');
 
 
-
 // espace membre
 // -> login
 $router->get('/login', \App\Controllers\ProfilController::class . ':loginGet', 'loginGET');
@@ -97,6 +96,8 @@ $router->get('/edit/animaux/add', App\Controllers\ProfilController::class . ':ad
 $router->post('/edit/animaux/add', App\Controllers\ProfilController::class . ':addAnimauxPost', 'addAnimauxPOST')->withMiddleWare(new \App\Middlewares\UserConnected());
 
 $router->get('edit/animaux/delete/:id', \App\Controllers\ProfilController::class . ':deleteAnimal', 'deleteAnimal')->withMiddleWare(new \App\Middlewares\UserConnected());
+
+$router->get('/animal/:id', \App\Controllers\ProfilController::class . ':showProfile', 'profileGET');
 
 $router->run();
 // ----------------------------------------------------------------------------------------

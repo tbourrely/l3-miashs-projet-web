@@ -13,7 +13,7 @@ class Animal extends AbstractModel
 {
     protected static $table = 'Animal';
     protected static $primaryKey = 'idAnimal';
-    protected $allowedFields = array('idAnimal', 'nom', 'age', 'type', 'race', 'ville', 'photo', 'idCompte');
+    protected $allowedFields = array('idAnimal', 'nom', 'age', 'type', 'race', 'ville', 'photo', 'description', 'idCompte');
 
     public static function exists($id)
     {

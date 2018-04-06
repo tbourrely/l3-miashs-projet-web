@@ -5,7 +5,22 @@
         <div class="content">
             <h3>Vous cherchez un match ?</h3>
             <div>
-                <a href="<?php echo \Pure\Router\Classes\Router::getCurrentRouter()->url('loginGET'); ?>" class="connect">Se connecter</a>
+                <?php
+                    $link = 'home';
+                    $params = [];
+
+                    if (!isset($_SESSION['logged_in'])) { // pas connecté
+                        $link = 'loginGET';
+                        $text = 'Se connecter';
+                    } else {
+                        $link = 'profileGET';
+                        $text = 'Trouver un match';
+                        $params['id'] = "latest";
+                    }
+
+                    $link = \Pure\Router\Classes\Router::getCurrentRouter()->url($link, $params);
+                ?>
+                <a href="<?= $link; ?>" class="connect"><?= $text; ?></a>
             </div>
         </div>
         <div class="copyright">

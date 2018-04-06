@@ -13,9 +13,65 @@ use Pure\Controllers\Classes\BaseController;
 
 class ProfilController extends BaseController
 {
-    public function index($id)
+    public function showProfile($id)
     {
-        $this->render('profil', ['idProfil' => $id]);
+        $errors = [];
+        $success = [];
+        $idUser = $_SESSION['user']['idCompte'];
+
+        // traitement de l'id
+        if (is_numeric($id)) {
+            // id animal précis
+
+            $animal = Animal::exists($id);
+
+            if (!$animal) {
+                // pas d'animal avec cet id
+                $errors[] = 'Aucun animal trouvé !';
+            } elseif ($animal->idCompte === $idUser) {
+                // animal trouvé
+
+                $previousUrl = $this->getProfileUrl($id - 1, $idUser);
+                $nextUrl = $this->getProfileUrl($id + 1, $idUser);
+
+                $params = [
+                    'animal'        => $animal,
+                    'previousUrl'   => $previousUrl,
+                    'nextUrl'       => $nextUrl
+                ];
+                $this->render('profil', $params);
+            }
+
+
+        } elseif ($id === 'latest') {
+            die('ok latest');
+        } else {
+            $errors[] = 'id non valide';
+        }
+
+        // redirection
+        $_SESSION['errors']['match'] = $errors;
+        $_SESSION['success']['match'] = $success;
+
+        $this->redirect($this->getRouter()->url('profileGET', ['id' => 'latest']));
+    }
+
+    /**
+     * Créé le lien vers un profil si l'animal existe et si il appartient à l'utilisateur connecté
+     *
+     * @param $id
+     * @param $idUser
+     * @return string
+     */
+    private function getProfileUrl($id, $idUser)
+    {
+        $animal = Animal::exists($id);
+
+        if (!$animal || $animal->idCompte !== $idUser) {
+            $id = 'latest';
+        }
+
+        return $this->getRouter()->url('profileGET', ['id' => $id]);
     }
 
     /**
@@ -65,8 +121,8 @@ class ProfilController extends BaseController
 
                 // met en session quelques données utiles
                 $_SESSION['user'] = array(
-                    'idCompte'  => $result->idCompte,
-                    'login'     => $result->login
+                    'idCompte' => $result->idCompte,
+                    'login' => $result->login
                 );
 
                 if (isset($_SESSION['errors']['login'])) {
@@ -134,7 +190,7 @@ class ProfilController extends BaseController
 
         if ($_POST['password'] !== $_POST['password2']) {
             $errors[] = 'Les mots de passes doivent correspondrent !';
-        } elseif(!empty($_POST['password'] && !empty($_POST['password2']))) {
+        } elseif (!empty($_POST['password'] && !empty($_POST['password2']))) {
             $toUpdate['password'] = 1;
         }
 
@@ -209,13 +265,13 @@ class ProfilController extends BaseController
         $success = [];
 
         if (
-            !isset(
-                $_POST['nom'],
-                $_POST['type'],
-                $_POST['age'],
-                $_POST['race'],
-                $_POST['ville']
-            )
+        !isset(
+            $_POST['nom'],
+            $_POST['type'],
+            $_POST['age'],
+            $_POST['race'],
+            $_POST['ville']
+        )
         ) {
             $errors[] = "Veuillez de renseigner tous les champs !";
         }
