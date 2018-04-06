@@ -19,34 +19,34 @@ class ProfilController extends BaseController
         $success = [];
         $idUser = $_SESSION['user']['idCompte'];
 
-        // traitement de l'id
-        if (is_numeric($id)) {
-            // id animal précis
+        if (!is_numeric($id) && $id !== 'latest') {
+            $errors[] = 'id non valide';
+        } else {
+
+            if ($id === 'latest') {
+                $criteria = "idCompte = $idUser";
+                $id = Animal::maxPk($criteria);
+            }
 
             $animal = Animal::exists($id);
 
-            if (!$animal) {
+            if (!$animal || (isset($animal->idCompte) && $animal->idCompte !== $idUser)) {
                 // pas d'animal avec cet id
-                $errors[] = 'Aucun animal trouvé !';
-            } elseif ($animal->idCompte === $idUser) {
+                $errors[] = 'Aucun animal trouvé correspondant aux critères !';
+            } else {
                 // animal trouvé
 
-                $previousUrl = $this->getProfileUrl($id - 1, $idUser);
-                $nextUrl = $this->getProfileUrl($id + 1, $idUser);
+                // + récent au + ancien
+                $urls = $this->getProfileUrls($animal, $idUser);
 
                 $params = [
                     'animal'        => $animal,
-                    'previousUrl'   => $previousUrl,
-                    'nextUrl'       => $nextUrl
+                    'previousUrl'   => $urls[0],
+                    'nextUrl'       => $urls[1]
                 ];
                 $this->render('profil', $params);
             }
 
-
-        } elseif ($id === 'latest') {
-            die('ok latest');
-        } else {
-            $errors[] = 'id non valide';
         }
 
         // redirection
@@ -57,21 +57,44 @@ class ProfilController extends BaseController
     }
 
     /**
-     * Créé le lien vers un profil si l'animal existe et si il appartient à l'utilisateur connecté
+     * Créé les liens vers les profils suivants/précédents
+     * + récent au + ancien
      *
      * @param $id
      * @param $idUser
-     * @return string
+     * @return array
      */
-    private function getProfileUrl($id, $idUser)
+    private function getProfileUrls($animal, $idUser)
     {
-        $animal = Animal::exists($id);
+        // 0 -> previous, 1 -> next
+        $res = ['#', '#'];
+        $idList = [];
 
-        if (!$animal || $animal->idCompte !== $idUser) {
-            $id = 'latest';
+        $idAnimal = $animal->idAnimal;
+
+        $animaux = Animal::where("idCompte = $idUser");
+
+        foreach ($animaux->getIterator() as $ani) {
+            $idList[] = $ani->idAnimal;
         }
 
-        return $this->getRouter()->url('profileGET', ['id' => $id]);
+        $currIdOffset = array_search($idAnimal, $idList);
+
+        // previous
+        if ($currIdOffset + 1 >= count($idList)) {
+            $res[0] = 'latest';
+        } else {
+            $res[0] = $idList[$currIdOffset + 1];
+        }
+
+        // next
+        if ($currIdOffset - 1 < 0) {
+            $res[1] = 'latest';
+        } else {
+            $res[1] = $idList[$currIdOffset - 1];
+        }
+
+        return $res;
     }
 
     /**
@@ -270,7 +293,8 @@ class ProfilController extends BaseController
             $_POST['type'],
             $_POST['age'],
             $_POST['race'],
-            $_POST['ville']
+            $_POST['ville'],
+            $_POST['description']
         )
         ) {
             $errors[] = "Veuillez de renseigner tous les champs !";
@@ -279,13 +303,14 @@ class ProfilController extends BaseController
         if (empty($errors)) {
 
             $fields = array(
-                'nom' => $_POST['nom'],
-                'age' => $_POST['age'],
-                'type' => $_POST['type'],
-                'race' => $_POST['race'],
-                'ville' => $_POST['ville'],
-                'photo' => '/data/img/animaux/default.png',
-                'idCompte' => $_SESSION['user']['idCompte']
+                'nom'           => $_POST['nom'],
+                'age'           => $_POST['age'],
+                'type'          => $_POST['type'],
+                'race'          => $_POST['race'],
+                'ville'         => $_POST['ville'],
+                'photo'         => '/data/img/animaux/default.png',
+                'description'   => $_POST['description'],
+                'idCompte'      => $_SESSION['user']['idCompte']
             );
 
             // upload image

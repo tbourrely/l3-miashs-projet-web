@@ -287,6 +287,28 @@ abstract class AbstractModel
      ********************************************************/
 
     /**
+     * Return the MAX Primary Key
+     *
+     * @param string $criteria
+     * @return mixed
+     * @throws \Exception
+     */
+    public static function maxPk($criteria = "")
+    {
+        if (!isset(static::$primaryKey)) {
+            throw new \Exception('Primary key must be set');
+        }
+
+        $fields = 'MAX(' . static::$primaryKey . ')';
+
+        static::$_adapter->select(static::$table, $criteria, $fields, '', 1);
+
+        $data = static::$_adapter->fetch();
+
+        return isset($data[$fields]) ? $data[$fields] : $data;
+    }
+
+    /**
      * Assess $class existence
      *
      * @param $class
