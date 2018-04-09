@@ -28,7 +28,7 @@
             <input class="add-animal-form__ville" id="ville" type="text" name="ville" placeholder="..." autocomplete="off" data-country="fr" required>
 
             <label class="add-animal-form__label" for="description">Description</label>
-            <textarea class="add-animal-form__description" name="description" id="description" cols="30" rows="10" required></textarea>
+            <textarea class="add-animal-form__description" name="description" id="description" cols="30" rows="10" maxlength="615" required></textarea>
 
             <input class="add-animal-form__photo" id="photo" type="file" name="photo">
             <label class="add-animal-form__label" for="photo">Choisissez une image...</label>

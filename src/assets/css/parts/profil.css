@@ -1,0 +1,81 @@
+.profil {
+    display: block;
+    height: 100vh;
+    /*border: solid palegreen;*/
+}
+
+.profil__inner {
+    display: flex!important;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 90em!important;
+    /*border: solid red;*/
+}
+
+.profil__content {
+    position: relative;
+    /*border: solid;*/
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 80%;
+}
+
+.profil__content .image {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.profil__content > div {
+    /*border: solid purple;*/
+    display: inline-block;
+    height: 100%;
+}
+
+.profil__desc {
+    margin-top: 2em;
+}
+
+.heart {
+    position: relative;
+    fill: white;
+    width: 70px;
+    height: 70px;
+    transform: scale(.5);
+    margin-top: 2px;
+    margin-left: -1px;
+}
+
+.match-button {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 70px;
+    height: 70px;
+    background-color: #e74c3c;
+    border-radius: 100%;
+    padding: 1px;
+    box-shadow: 0 0 6px gray;
+    transition: all .2s ease-in-out;
+}
+
+.match-button:hover {
+    transform: scale(1.3);
+}
+
+.match-button:hover .heart {
+    animation: pulse 1s ease infinite;
+}
+
+
+
+
+@keyframes pulse {
+    0% { transform: scale(.5); }
+    50% { transform: scale(.7); }
+    100% { transform: scale(.5); }
+}

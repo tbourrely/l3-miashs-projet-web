@@ -68,6 +68,8 @@
 
 
     // city autocomplete
-    $('input#ville').cityAutocomplete({});
+    if ($('input#ville').length) {
+        $('input#ville').cityAutocomplete({});
+    }
 
 })(jQuery);

@@ -97,7 +97,9 @@ $router->post('/edit/animaux/add', App\Controllers\ProfilController::class . ':a
 
 $router->get('edit/animaux/delete/:id', \App\Controllers\ProfilController::class . ':deleteAnimal', 'deleteAnimal')->withMiddleWare(new \App\Middlewares\UserConnected());
 
-$router->get('/animal/:id', \App\Controllers\ProfilController::class . ':showProfile', 'profileGET');
+$router->get('/animal/:id', \App\Controllers\ProfilController::class . ':showProfile', 'profileGET')->withMiddleWare(new \App\Middlewares\UserConnected());
+
+$router->get('/match/:match/:next', \App\Controllers\ProfilController::class . ':match', 'match')->withMiddleWare(new \App\Middlewares\UserConnected());
 
 $router->run();
 // ----------------------------------------------------------------------------------------

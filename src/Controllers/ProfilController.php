@@ -13,6 +13,11 @@ use Pure\Controllers\Classes\BaseController;
 
 class ProfilController extends BaseController
 {
+    /**
+     * Affiche un profil
+     *
+     * @param $id
+     */
     public function showProfile($id)
     {
         $errors = [];
@@ -45,7 +50,8 @@ class ProfilController extends BaseController
                 $params = [
                     'animal'        => $animal,
                     'previousUrl'   => $this->getRouter()->url('profileGET', ['id' => $previous]),
-                    'nextUrl'       => $this->getRouter()->url('profileGET', ['id' => $next])
+                    'nextUrl'       => $this->getRouter()->url('profileGET', ['id' => $next]),
+                    'nextId'        => $next
                 ];
                 $this->render('profil', $params);
             }
@@ -113,6 +119,13 @@ class ProfilController extends BaseController
         }
 
         return $res;
+    }
+
+    public function match($match, $next)
+    {
+        $idUser = $_SESSION['user']['idCompte'];
+
+
     }
 
     /**
