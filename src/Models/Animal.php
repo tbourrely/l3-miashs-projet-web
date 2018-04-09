@@ -91,4 +91,44 @@ class Animal extends AbstractModel
 
         return false;
     }
+
+    public static function findPrevious($idAnimal, $idUser, $maxPk)
+    {
+        $idUser = static::$_adapter->quoteValue($idUser);
+        $idAnimal = static::$_adapter->quoteValue($idAnimal);
+
+        if ($idAnimal > $maxPk) {
+            $res = false;
+        } else {
+            $animal = Animal::where("idCompte != $idUser AND idAnimal = $idAnimal");
+
+            if ($animal->count() === 0 || $animal->first()->isMatched($idUser)) {
+                $res = static::findPrevious($idAnimal + 1, $idUser, $maxPk);
+            } else {
+                $res = $idAnimal;
+            }
+        }
+
+        return $res;
+    }
+
+    public static function findNext($idAnimal, $idUser, $minPk)
+    {
+        $idUser = static::$_adapter->quoteValue($idUser);
+        $idAnimal = static::$_adapter->quoteValue($idAnimal);
+
+        if ($idAnimal < $minPk) {
+            $res = false;
+        } else {
+            $animal = Animal::where("idCompte != $idUser AND idAnimal = $idAnimal");
+
+            if ($animal->count() === 0 || $animal->first()->isMatched($idUser)) {
+                $res = static::findNext($idAnimal - 1, $idUser, $minPk);
+            } else {
+                $res = $idAnimal;
+            }
+        }
+
+        return $res;
+    }
 }

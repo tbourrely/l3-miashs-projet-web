@@ -19,7 +19,7 @@
                     <?= $animal->description; ?>
                 </p>
 
-                <a href="<?= \Pure\Router\Classes\Router::getCurrentRouter()->url('match', ['match' => $animal->idAnimal, 'next' => $nextId]) ?>" class="match-button">
+                <a href="<?= \Pure\Router\Classes\Router::getCurrentRouter()->url('match', ['match' => $animal->idAnimal]) ?>" class="match-button">
                     <svg class="heart" viewBox="0 0 32 29.6">
                         <path d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2
 	c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z"/>
@@ -29,8 +29,13 @@
         </div>
     </div>
 
-    <a href="<?= $previousUrl; ?>" class="nav previous"><span class="fa fa-chevron-left"></span></a>
-    <a href="<?= $nextUrl; ?>" class="nav next"><span class="fa fa-chevron-right"></span></a>
+    <?php if (!empty($previousId)) : ?>
+        <a href="<?= \Pure\Router\Classes\Router::getCurrentRouter()->url('profileGET', ['id' => $previousId]); ?>" class="nav previous"><span class="fa fa-chevron-left"></span></a>
+    <?php endif; ?>
+
+    <?php if(!empty($nextId)) : ?>
+        <a href="<?= \Pure\Router\Classes\Router::getCurrentRouter()->url('profileGET', ['id' => $nextId]); ?>" class="nav next"><span class="fa fa-chevron-right"></span></a>
+    <?php endif; ?>
 </div>
 
 <?php require_once __DIR__ . DIRECTORY_SEPARATOR . 'footer.php'; ?>

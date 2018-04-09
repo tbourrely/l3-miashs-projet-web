@@ -29,9 +29,6 @@ class ProfilController extends BaseController
             $errors[] = 'id non valide';
         } else {
 
-            $maxPk = Animal::maxPk("idCompte != $idUser");
-            $minPk = Animal::minPk("idCompte != $idUser");
-
             if ($id === 'latest') {
 
                 $latest = Animal::findLatest($idUser);
@@ -46,6 +43,9 @@ class ProfilController extends BaseController
             }
 
             if ($id !== null) {
+
+                $maxPk = Animal::maxPk("idCompte != $idUser");
+                $minPk = Animal::minPk("idCompte != $idUser");
                 $animal = Animal::exists($id);
 
                 /** @var $animal Animal */
@@ -56,17 +56,17 @@ class ProfilController extends BaseController
                     // animal trouvé
 
                     // previous : + récent, next : + ancien
-                    $previous = $this->previousProfile($animal->idAnimal + 1, $idUser, $maxPk);
-                    $next = $this->nextProfile($animal->idAnimal - 1, $idUser, $minPk);
+                    $previous = Animal::findPrevious($animal->idAnimal + 1, $idUser, $maxPk);
+                    $next = Animal::findNext($animal->idAnimal - 1, $idUser, $minPk);
 
                     $params = [
                         'animal'        => $animal,
-                        'previousUrl'   => $this->getRouter()->url('profileGET', ['id' => $previous]),
-                        'nextUrl'       => $this->getRouter()->url('profileGET', ['id' => $next]),
+                        'previousId'   => $previous,
                         'nextId'        => $next
                     ];
                     $this->render('profil', $params);
                 }
+
             }
 
         }
@@ -79,68 +79,12 @@ class ProfilController extends BaseController
     }
 
     /**
-     * Recupere l'id du profil précédent (+récent)
-     * Recursive
-     *
-     * @param $idAnimal
-     * @param $idUser
-     * @param $maxPk
-     * @return string
-     */
-    private function previousProfile($idAnimal, $idUser, $maxPk)
-    {
-        $res = '';
-
-        if ($idAnimal >= $maxPk) {
-            $res = $maxPk;
-        } else {
-            $animal = Animal::where("idCompte != $idUser AND idAnimal = $idAnimal");
-
-            if ($animal->count() === 0) {
-                $res = $this->previousProfile($idAnimal + 1, $idUser, $maxPk);
-            } else {
-                $res = $idAnimal;
-            }
-        }
-
-        return $res;
-    }
-
-    /**
-     * Récupère l'id du profil suivant (+ancien)
-     * Recursive
-     *
-     * @param $idAnimal
-     * @param $idUser
-     * @param $minPk
-     * @return string
-     */
-    private function nextProfile($idAnimal, $idUser, $minPk)
-    {
-        $res = '';
-
-        if ($idAnimal <= $minPk) {
-            $res = $minPk;
-        } else {
-            $animal = Animal::where("idCompte != $idUser AND idAnimal = $idAnimal");
-
-            if ($animal->count() === 0) {
-                $res = $this->nextProfile($idAnimal - 1, $idUser, $minPk);
-            } else {
-                $res = $idAnimal;
-            }
-        }
-
-        return $res;
-    }
-
-    /**
      * Créer le match entre $match et l'utilisateur connecté
      *
      * @param $match
      * @param $next
      */
-    public function match($match, $next)
+    public function match($match)
     {
         $idUser = $_SESSION['user']['idCompte'];
 
@@ -148,8 +92,8 @@ class ProfilController extends BaseController
         $success = [];
         $nextId = 'latest';
 
-        if (!is_numeric($match) || !is_numeric($next)) {
-            $errors[] = 'Paramètres non valides !';
+        if (!is_numeric($match)) {
+            $errors[] = 'Paramètre non valides !';
         } else {
             // tout est ok
 
@@ -160,8 +104,11 @@ class ProfilController extends BaseController
 
                 /** @var $animal Animal */
                 if ($animal->linkWith($idUser)) {
+                    $minPk = Animal::minPk("idCompte != $idUser");
+                    $next = Animal::findNext($animal->idAnimal - 1, $idUser, $minPk);
+
                     $success[] = 'Vous avez matché !';
-                    $nextId = $next;
+                    $nextId = empty($next) ?:$next;
                 } else {
                     $errors[] = 'Impossible de matcher !';
                 }
