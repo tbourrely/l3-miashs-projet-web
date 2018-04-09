@@ -23,6 +23,7 @@ class ProfilController extends BaseController
         $errors = [];
         $success = [];
         $idUser = $_SESSION['user']['idCompte'];
+        $redirectUrl = $this->getRouter()->url('profileGET', ['id' => 'latest']);
 
         if (!is_numeric($id) && $id !== 'latest') {
             $errors[] = 'id non valide';
@@ -32,37 +33,49 @@ class ProfilController extends BaseController
             $minPk = Animal::minPk("idCompte != $idUser");
 
             if ($id === 'latest') {
-                $id = $maxPk;
+
+                $latest = Animal::findLatest($idUser);
+
+                if ($latest === false) {
+                    $redirectUrl = $this->getRouter()->url('home');
+                    $id = null;
+                } else {
+                    $id = $latest;
+                }
+
             }
 
-            $animal = Animal::exists($id);
+            if ($id !== null) {
+                $animal = Animal::exists($id);
 
-            if (!$animal || (isset($animal->idCompte) && $animal->idCompte === $idUser)) {
-                // pas d'animal avec cet id
-                $errors[] = 'Aucun animal trouvé correspondant aux critères !';
-            } else {
-                // animal trouvé
+                /** @var $animal Animal */
+                if (!$animal || (isset($animal->idCompte) && $animal->idCompte === $idUser) || $animal->isMatched($idUser)) {
+                    // pas d'animal avec cet id ou déja matché
+                    $errors[] = 'Aucun animal trouvé correspondant aux critères !';
+                } else {
+                    // animal trouvé
 
-                // previous : + récent, next : + ancien
-                $previous = $this->previousProfile($animal->idAnimal + 1, $idUser, $maxPk);
-                $next = $this->nextProfile($animal->idAnimal - 1, $idUser, $minPk);
+                    // previous : + récent, next : + ancien
+                    $previous = $this->previousProfile($animal->idAnimal + 1, $idUser, $maxPk);
+                    $next = $this->nextProfile($animal->idAnimal - 1, $idUser, $minPk);
 
-                $params = [
-                    'animal'        => $animal,
-                    'previousUrl'   => $this->getRouter()->url('profileGET', ['id' => $previous]),
-                    'nextUrl'       => $this->getRouter()->url('profileGET', ['id' => $next]),
-                    'nextId'        => $next
-                ];
-                $this->render('profil', $params);
+                    $params = [
+                        'animal'        => $animal,
+                        'previousUrl'   => $this->getRouter()->url('profileGET', ['id' => $previous]),
+                        'nextUrl'       => $this->getRouter()->url('profileGET', ['id' => $next]),
+                        'nextId'        => $next
+                    ];
+                    $this->render('profil', $params);
+                }
             }
 
         }
 
         // redirection
-        $_SESSION['errors']['match'] = $errors;
-        $_SESSION['success']['match'] = $success;
+        $_SESSION['errors']['showProfile'] = $errors;
+        $_SESSION['success']['showProfile'] = $success;
 
-        $this->redirect($this->getRouter()->url('profileGET', ['id' => 'latest']));
+        $this->redirect($redirectUrl);
     }
 
     /**
@@ -121,11 +134,47 @@ class ProfilController extends BaseController
         return $res;
     }
 
+    /**
+     * Créer le match entre $match et l'utilisateur connecté
+     *
+     * @param $match
+     * @param $next
+     */
     public function match($match, $next)
     {
         $idUser = $_SESSION['user']['idCompte'];
 
+        $errors = [];
+        $success = [];
+        $nextId = 'latest';
 
+        if (!is_numeric($match) || !is_numeric($next)) {
+            $errors[] = 'Paramètres non valides !';
+        } else {
+            // tout est ok
+
+            $animal = Animal::exists($match);
+
+            if (false !== $animal && $animal->idCompte !== $idUser) {
+                // animal existe
+
+                /** @var $animal Animal */
+                if ($animal->linkWith($idUser)) {
+                    $success[] = 'Vous avez matché !';
+                    $nextId = $next;
+                } else {
+                    $errors[] = 'Impossible de matcher !';
+                }
+
+            }
+
+        }
+
+        // redirect
+         $_SESSION['errors']['match'] = $errors;
+         $_SESSION['success']['match'] = $success;
+
+        $this->redirect($this->getRouter()->url('profileGET', ['id' => $nextId]));
     }
 
     /**
