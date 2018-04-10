@@ -131,4 +131,14 @@ class Animal extends AbstractModel
 
         return $res;
     }
+
+    public function matchedAccounts()
+    {
+        return $this->belongsToMany('App\Models\Compte', 'MatchAC', 'idAnimal', 'idCompte');
+    }
+
+    public function getCompte()
+    {
+        return $this->belongsTo('App\Models\Compte', 'idCompte', 'idCompte');
+    }
 }

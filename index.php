@@ -73,10 +73,6 @@ $router = new Router($_GET['url']);
 // homepage
 $router->get('/',\App\Controllers\HomeController::class . ':home', 'home');
 
-// profil
-//$router->get('/profil/:id', \App\Controllers\ProfilController::class . ':index', 'profilIndex');
-
-
 // espace membre
 // -> login
 $router->get('/login', \App\Controllers\ProfilController::class . ':loginGet', 'loginGET');
@@ -85,11 +81,11 @@ $router->post('/login', \App\Controllers\ProfilController::class . ':loginPost',
 // -> logout
 $router->get('/logout', \App\Controllers\ProfilController::class . ':logout', 'logout');
 
-// gestion profil
+// -> gestion profil
 $router->get('/edit', App\Controllers\ProfilController::class . ':editGet', 'editGET')->withMiddleWare(new \App\Middlewares\UserConnected());
 $router->post('/edit', App\Controllers\ProfilController::class . ':editPost', 'editPOST')->withMiddleWare(new \App\Middlewares\UserConnected());
 
-// gestion animaux
+// -> gestion animaux
 $router->get('/edit/animaux', App\Controllers\ProfilController::class . ':editAnimauxGet', 'editAnimauxGET')->withMiddleWare(new \App\Middlewares\UserConnected());
 
 $router->get('/edit/animaux/add', App\Controllers\ProfilController::class . ':addAnimauxGet', 'addAnimauxGET')->withMiddleWare(new \App\Middlewares\UserConnected());
@@ -97,9 +93,13 @@ $router->post('/edit/animaux/add', App\Controllers\ProfilController::class . ':a
 
 $router->get('edit/animaux/delete/:id', \App\Controllers\ProfilController::class . ':deleteAnimal', 'deleteAnimal')->withMiddleWare(new \App\Middlewares\UserConnected());
 
+// -> profils animaux
 $router->get('/animal/:id', \App\Controllers\ProfilController::class . ':showProfile', 'profileGET')->withMiddleWare(new \App\Middlewares\UserConnected());
 
+// -> matchs
 $router->get('/match/:match', \App\Controllers\ProfilController::class . ':match', 'match')->withMiddleWare(new \App\Middlewares\UserConnected());
+
+$router->get('/matchs', App\Controllers\ProfilController::class . ':listMatchs', 'listMatchs')->withMiddleWare(new \App\Middlewares\UserConnected());
 
 $router->run();
 // ----------------------------------------------------------------------------------------

@@ -30,6 +30,7 @@
     <link rel="stylesheet" type="text/css" href="/src/assets/css/parts/menu.css">
     <link rel="stylesheet" type="text/css" href="/src/assets/css/parts/messages.css">
     <link rel="stylesheet" type="text/css" href="/src/assets/css/parts/profil.css">
+    <link rel="stylesheet" type="text/css" href="/src/assets/css/parts/listMatchs.css">
 </head>
 <body>
 

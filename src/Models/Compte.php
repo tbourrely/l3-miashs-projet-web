@@ -57,6 +57,11 @@ class Compte extends AbstractModel
 
     public function getAnimals()
     {
-        return $animals = $this->hasMany('App\Models\Animal', 'idCompte', 'idCompte');
+        return $this->hasMany('App\Models\Animal', 'idCompte', 'idCompte');
+    }
+
+    public function matchedAnimals()
+    {
+        return $this->belongsToMany('App\Models\Animal', 'MatchAC', 'idCompte', 'idAnimal');
     }
 }

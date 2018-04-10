@@ -26,7 +26,7 @@
         <ul id="menu">
             <li><a href="<?= \Pure\Router\Classes\Router::getCurrentRouter()->url('editGET'); ?>">Profil</a></li>
             <li><a href="<?= \Pure\Router\Classes\Router::getCurrentRouter()->url('editAnimauxGET'); ?>">Animaux</a></li>
-            <li><a href="#">Matchs</a></li>
+            <li><a href="<?= \Pure\Router\Classes\Router::getCurrentRouter()->url('listMatchs'); ?>">Matchs</a></li>
             <li><a href="<?= \Pure\Router\Classes\Router::getCurrentRouter()->url('logout'); ?>">Déconnexion</a></li>
         </ul>
     </div>

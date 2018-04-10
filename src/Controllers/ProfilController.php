@@ -406,4 +406,19 @@ class ProfilController extends BaseController
 
         $this->redirect($this->getRouter()->url('editAnimauxGET'));
     }
+
+    public function listMatchs()
+    {
+        $errors = [];
+        $success = [];
+
+
+        $idUser = $_SESSION['user']['idCompte'];
+
+        /** @var $compte Compte */
+        $compte = Compte::getById($idUser);
+        $animals = $compte->matchedAnimals();
+
+        $this->render('memberArea/listMatchs', ['animals' => $animals]);
+    }
 }
