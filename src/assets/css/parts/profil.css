@@ -71,7 +71,11 @@
     animation: pulse 1s ease infinite;
 }
 
-
+.profil-menu {
+    position: absolute;
+    left: 0;
+    top: 6vh;
+}
 
 
 @keyframes pulse {

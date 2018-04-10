@@ -34,6 +34,10 @@
 
                 </div>
             </div>
+        <?php else : ?>
+            <div class="no-match">
+                <h2>Aucun animal trouvé...</h2>
+            </div>
         <?php endif; ?>
 
     </div>

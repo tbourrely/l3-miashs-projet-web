@@ -2,6 +2,11 @@
 
 <!-- Main -->
 <div id="preview" class="vertical profil">
+
+    <div class="profil-menu">
+        <?php require_once __DIR__ . DIRECTORY_SEPARATOR . 'menu.php'; ?>
+    </div>
+
     <div class="inner profil__inner">
         <div class="profil__content">
             <div class="image fit">

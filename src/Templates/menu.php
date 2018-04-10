@@ -24,9 +24,10 @@
         but hey, it's pure CSS magic.
         -->
         <ul id="menu">
-            <li><a href="<?= \Pure\Router\Classes\Router::getCurrentRouter()->url('editGET'); ?>">Profil</a></li>
-            <li><a href="<?= \Pure\Router\Classes\Router::getCurrentRouter()->url('editAnimauxGET'); ?>">Animaux</a></li>
-            <li><a href="<?= \Pure\Router\Classes\Router::getCurrentRouter()->url('listMatchs'); ?>">Matchs</a></li>
+            <li><a href="<?= \Pure\Router\Classes\Router::getCurrentRouter()->url('editGET'); ?>">Mon Profil</a></li>
+            <li><a href="<?= \Pure\Router\Classes\Router::getCurrentRouter()->url('editAnimauxGET'); ?>">Mes Animaux</a></li>
+            <li><a href="<?= \Pure\Router\Classes\Router::getCurrentRouter()->url('listMatchs'); ?>">Mes Matchs</a></li>
+            <li><a href="<?= \Pure\Router\Classes\Router::getCurrentRouter()->url('profileGET', ['id' => 'latest']); ?>">Trouver un match</a></li>
             <li><a href="<?= \Pure\Router\Classes\Router::getCurrentRouter()->url('logout'); ?>">Déconnexion</a></li>
         </ul>
     </div>

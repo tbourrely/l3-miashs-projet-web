@@ -3,7 +3,7 @@
     <a href="#" class="info fa fa-plus-circle"><span>About</span></a>
     <div class="inner">
         <div class="content">
-            <h3>Vous cherchez un match ?</h3>
+            <h3>Vous cherchez un animal ?</h3>
             <div>
                 <?php
                     $link = 'home';
@@ -24,7 +24,9 @@
             </div>
         </div>
         <div class="copyright">
-            &copy; Untitled. Design: <a href="https://templated.co">TEMPLATED</a>. Images: <a href="https://unsplash.com/">Unsplash</a>.
+            &copy; Untitled. Design: <a href="https://templated.co">TEMPLATED</a>.
+            <br>
+            Made with &hearts; by Bourrely Thomas & Notteau Arthur !
         </div>
     </div>
 </footer>

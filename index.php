@@ -99,6 +99,7 @@ $router->get('/animal/:id', \App\Controllers\ProfilController::class . ':showPro
 // -> matchs
 $router->get('/match/:match', \App\Controllers\ProfilController::class . ':match', 'match')->withMiddleWare(new \App\Middlewares\UserConnected());
 
+// -> liste des animaux matchés
 $router->get('/matchs', App\Controllers\ProfilController::class . ':listMatchs', 'listMatchs')->withMiddleWare(new \App\Middlewares\UserConnected());
 
 $router->run();
