@@ -25,7 +25,7 @@
                                 <div class="animal__race">Race : <span class="animal__race__inner"><?= ucfirst($animal->race); ?></span></div>
                                 <div class="animal__age">Age : <span class="animal__age__inner"><?= $animal->age; ?> an<?= ($animal->age > 1) ? 's' : ''; ?></span></div>
                                 <div class="animal__ville">Ville : <span class="animal__ville__inner"><?= ucfirst($animal->ville); ?></span></div>
-                                <div class="animal__email">Propriétaire : <span class="animal__email__inner"><?= $compte->email; ?></span><a href="mailto:<?= $compte->email; ?>" class="animal__contact"><span class="animal__contact_inner fa fa-envelope-o"></span></a></div>
+                                <div class="animal__email">Propriétaire : <div class="animal__email__inner"><?= $compte->email; ?></div><a href="mailto:<?= $compte->email; ?>" class="animal__contact"><span class="animal__contact_inner fa fa-envelope-o"></span></a></div>
                             </div>
 
                         </div>

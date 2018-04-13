@@ -3,11 +3,14 @@
 }
 
 .animal__infos--match {
-    height: 180px;
+    min-height: 180px;
+    height: auto;
+    max-width: 50%;
+    margin-left: 10%;
 }
 
 .animal__contact {
-    margin-left: 20px;
+    display: block;
 }
 
 .no-match {
@@ -19,11 +22,13 @@
     align-items: center;
 }
 
-@media screen and (max-width: 1400px){
-    .list-matchs-container {
-        grid-column-start: 3;
-        grid-column-end: 11;
-    }
+.animal__email {
+    width: 100%;
+}
+
+.animal__email__inner {
+    width: 100%;
+    overflow-x: scroll;
 }
 
 @media screen and (max-width: 1000px) {
@@ -34,7 +39,7 @@
 
 @media screen and (max-width: 885px) {
     .animal__infos--match {
-        margin-left: 5%;
+        margin-left: 8%;
     }
 
     .animal {
@@ -45,5 +50,16 @@
 @media screen and (max-width: 550px) {
     .list-matchs-container {
         grid-column-start: 2;
+    }
+
+    .animal__infos--match {
+        max-width: 100%;
+        width: 100%;
+        margin-left: 0;
+        align-items: center;
+    }
+
+    .animal__email {
+        text-align: center;
     }
 }

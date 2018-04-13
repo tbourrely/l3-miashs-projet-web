@@ -80,10 +80,10 @@
 
             if ($(this).prop('checked')) {
                 elem.css('position', 'fixed');
-                $('body').css('overflowY', 'hidden');
+                $('body').css('overflow-y', 'hidden');
             } else {
                 elem.css('position', 'absolute');
-                $('body').css('overflowY', 'visible');
+                $('body').css('overflow-y', 'visible');
             }
         });
     }
