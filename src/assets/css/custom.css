@@ -50,3 +50,19 @@ input[type='submit']:hover {
 #preview .nav {
     z-index: 9;
 }
+
+#header {
+    z-index: 9;
+}
+
+@media screen and (max-width: 767px) {
+    .text--medium {
+        font-size: 17px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    input[type="submit"] {
+        padding: 0 2.5em;
+    }
+}

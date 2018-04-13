@@ -165,3 +165,32 @@
         box-shadow: 2px 2px 5px gray;
     }
 }
+
+@media screen and (max-width: 670px) {
+    .animal__infos {
+        font-size: .8em;
+    }
+}
+
+@media screen and (max-width: 550px) {
+    .animal__photo {
+        display: none;
+    }
+
+    .animal__infos {
+        width: 100%;
+        margin-left: 0;
+        align-items: center;
+    }
+}
+
+@media screen and (max-width: 375px) {
+    .animal-add {
+        margin-top: calc(-25px / 2);
+        margin-left: 0;
+    }
+
+    .animal-content-container {
+        padding-top: 30px;
+    }
+}

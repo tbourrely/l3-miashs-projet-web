@@ -166,3 +166,25 @@
 #menu a:hover:after {
     width: 100%;
 }
+
+@media screen and (max-width: 736px) {
+    #menuToggle {
+        left: 25px;
+    }
+}
+
+@media screen and (max-width: 425px) {
+    #menuContainer {
+        position: absolute;
+    }
+
+    #menu {
+        position: fixed;
+        width: 130vw;
+        top: 0;
+    }
+    #menuToggle {
+        position: absolute;
+        top: auto;
+    }
+}

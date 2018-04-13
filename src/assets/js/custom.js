@@ -72,4 +72,21 @@
         $('input#ville').cityAutocomplete({});
     }
 
+
+    // menu on mobile
+    if (!window.matchMedia("(min-width: 426px)").matches) {
+        $('#menuToggle input').on('change', function() {
+            elem = $('#menuToggle');
+
+            if ($(this).prop('checked')) {
+                elem.css('position', 'fixed');
+                $('body').css('overflowY', 'hidden');
+            } else {
+                elem.css('position', 'absolute');
+                $('body').css('overflowY', 'visible');
+            }
+        });
+    }
+
+
 })(jQuery);

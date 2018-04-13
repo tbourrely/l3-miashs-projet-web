@@ -27,5 +27,18 @@
 
 .profil-edit__form input[type='submit'] {
     align-self: center;
-    width: 30%;
+}
+
+@media screen and (max-width: 767px){
+    .profil-edit__form input[type='submit'] {
+        width: 100%;
+    }
+
+    .profil-edit {
+        padding: 0 1em;
+    }
+
+    .profil-edit__form {
+        width: 100%;
+    }
 }

@@ -62,3 +62,18 @@
     display: block;
     margin-top: 2em;
 }
+
+@media screen and (max-width: 736px){
+    .animal-add-container {
+        grid-column-start: 3;
+        grid-column-end: 11;
+    }
+}
+
+@media screen and (max-width: 425px){
+    .animal-add-container {
+        padding: 2em 1em 0 1em;
+        grid-column-start: 1;
+        grid-column-end: 13;
+    }
+}
