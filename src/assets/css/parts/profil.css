@@ -77,6 +77,9 @@
     top: 6vh;
 }
 
+#preview .nav {
+    position: absolute;
+}
 
 @keyframes pulse {
     0% { transform: scale(.5); }
@@ -98,5 +101,34 @@
 
     .profil__inner {
         width: 100% !important;
+    }
+}
+
+@media screen and (max-width: 425px) {
+    .profil__content {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .profil__content {
+        height: auto;
+    }
+
+    #preview.vertical .inner .image,
+    #preview.vertical .inner .content {
+        display: inline-block;
+        width: 100%;
+    }
+
+    #preview {
+        height: auto;
+    }
+
+    #preview .inner {
+        margin-top: 65px;
+    }
+
+    .match-button {
+        bottom: -15px;
     }
 }

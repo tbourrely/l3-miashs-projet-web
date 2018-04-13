@@ -30,5 +30,6 @@
 
     #footer {
         z-index: 9;
+        bottom: -7em;
     }
 }
