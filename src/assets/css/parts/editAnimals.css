@@ -184,13 +184,15 @@
     }
 }
 
+@media screen and (max-width: 425px) {
+    .animal-content-container {
+        padding-top: 30px;
+    }
+}
+
 @media screen and (max-width: 375px) {
     .animal-add {
         margin-top: calc(-25px / 2);
         margin-left: 0;
-    }
-
-    .animal-content-container {
-        padding-top: 30px;
     }
 }
