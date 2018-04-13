@@ -4,6 +4,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    text-align: center;
     height: 100%;
     width: 100%;
 }
@@ -11,4 +12,10 @@
 .home--connected .username {
     color: #E74C3C;
     font-weight: 400;
+}
+
+@media screen and (max-width: 425px) {
+    .home--connected__text {
+        padding: 0 2em;
+    }
 }
