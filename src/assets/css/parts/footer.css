@@ -14,3 +14,21 @@
     color: whitesmoke;
     background-color: #E74C3C;
 }
+
+#footer {
+    bottom: -15em;
+}
+
+#footer .inner {
+    height: 15em;
+}
+
+@media screen and (max-width: 980px) {
+    #footer .inner {
+        height: auto;
+    }
+
+    #footer {
+        z-index: 9;
+    }
+}

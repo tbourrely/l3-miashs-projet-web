@@ -18,3 +18,26 @@
     justify-content: center;
     align-items: center;
 }
+
+@media screen and (max-width: 1400px){
+    .list-matchs-container {
+        grid-column-start: 3;
+        grid-column-end: 11;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .list-matchs-container {
+        grid-column-end: 12;
+    }
+}
+
+@media screen and (max-width: 885px) {
+    .animal__infos--match {
+        margin-left: 5%;
+    }
+
+    .animal {
+        padding: 1em 1em;
+    }
+}

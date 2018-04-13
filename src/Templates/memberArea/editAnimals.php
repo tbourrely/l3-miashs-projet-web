@@ -34,9 +34,10 @@
 
     </div>
 
-    <div class="s-9 e-13">
+    <div class="s-9 e-13 animal-add-button-container">
         <div class="animal-add">
             <a href="<?= \Pure\Router\Classes\Router::getCurrentRouter()->url('addAnimauxGET'); ?>" class="animal-add__link">Ajouter</a>
+            <a href="<?= \Pure\Router\Classes\Router::getCurrentRouter()->url('addAnimauxGET'); ?>" class="animal-add__link--mobile"><i class="fa fa-plus animal-add__link--mobile__inner"></i></a>
         </div>
     </div>
 </div>

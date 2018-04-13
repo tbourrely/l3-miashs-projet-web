@@ -47,10 +47,6 @@ input[type='submit']:hover {
     background-color: #CC0000;
 }
 
-#footer {
-    bottom: -15em;
-}
-
-#footer .inner {
-    height: 15em;
+#preview .nav {
+    z-index: 9;
 }

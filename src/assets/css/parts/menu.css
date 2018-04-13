@@ -100,14 +100,16 @@
     transform: rotate(-45deg) translate(0, -1px);
 }
 
+
+#menuContainer {
+    position: fixed;
+    z-index: 10;
+}
+
 /*
  * Make this absolute positioned
  * at the top left of the screen
  */
-#menuContainer {
-    position: fixed;
-}
-
 #menu
 {
     position: absolute;

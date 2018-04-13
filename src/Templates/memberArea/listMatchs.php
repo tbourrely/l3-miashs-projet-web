@@ -5,7 +5,7 @@
         <?php require_once __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'menu.php'; ?>
     </div>
 
-    <div class="s-4 e-10 h-4 animal-content-container">
+    <div class="s-4 e-10 h-4 animal-content-container list-matchs-container">
 
         <?php if (!empty($animals)) : ?>
             <div class="animal-edit">
