@@ -104,12 +104,16 @@
  * Make this absolute positioned
  * at the top left of the screen
  */
+#menuContainer {
+    position: fixed;
+}
+
 #menu
 {
     position: absolute;
     width: 300px;
     height: 100vh;
-    top:-7vh;
+    top:-6vh;
     margin: 0 0 0 -50px;
     padding: 50px;
     padding-top: 125px;

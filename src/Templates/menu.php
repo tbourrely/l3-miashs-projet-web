@@ -1,7 +1,7 @@
 <!--    Made by Erik Terwan    -->
 <!--   24th of November 2015   -->
 <!--    All rights reserved    -->
-<nav>
+<nav id="menuContainer">
     <div id="menuToggle">
         <!--
         A fake / hidden checkbox is used as click reciever,
