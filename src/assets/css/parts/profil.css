@@ -83,3 +83,20 @@
     50% { transform: scale(.7); }
     100% { transform: scale(.5); }
 }
+
+
+@media screen and (max-width: 980px) {
+    #preview.vertical .inner {
+        max-width: 100vh;
+    }
+
+    .match-button {
+        left: 0;
+        right: auto;
+        bottom: 10px;
+    }
+
+    .profil__inner {
+        width: 100% !important;
+    }
+}

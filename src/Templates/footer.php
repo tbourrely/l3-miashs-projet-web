@@ -14,7 +14,7 @@
                         $text = 'Se connecter';
                     } else {
                         $link = 'profileGET';
-                        $text = 'Trouver un match';
+                        $text = 'Trouvez un match !';
                         $params['id'] = "latest";
                     }
 
