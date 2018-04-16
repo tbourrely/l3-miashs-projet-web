@@ -7,10 +7,6 @@
 
 namespace Pure\TemplateEngine\Classes;
 
-
-use Pure\TemplateEngine\Exceptions\Pure_Templates_Exception;
-
-
 /**
  * Class Pure_Templates_Environment
  *

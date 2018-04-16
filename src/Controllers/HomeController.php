@@ -9,8 +9,15 @@ namespace App\Controllers;
 
 use Pure\Controllers\Classes\BaseController;
 
+/**
+ * Class HomeController
+ * @package App\Controllers
+ */
 class HomeController extends BaseController
 {
+    /**
+     * Affiche la homepage
+     */
     public function home()
     {
         $profils = array();

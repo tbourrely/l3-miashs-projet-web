@@ -11,6 +11,13 @@ namespace App\Middlewares;
 use Pure\Controllers\Classes\BaseController;
 use Pure\Router\Classes\Router;
 
+/**
+ * Class UserConnected
+ * Ce middle ware vérifie si l'utilisateur est bien connecté
+ * Dans le cas contraire, il le redirige vers la page de connexion
+ *
+ * @package App\Middlewares
+ */
 class UserConnected
 {
     public function __invoke(Callable $next)

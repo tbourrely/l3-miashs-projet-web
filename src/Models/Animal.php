@@ -9,14 +9,38 @@ namespace App\Models;
 
 use Pure\ORM\AbstractClasses\AbstractModel;
 
+/**
+ * Class Animal
+ * @package App\Models
+ */
 class Animal extends AbstractModel
 {
+    /**
+     * @var string $table, table dans la BDD
+     */
     protected static $table = 'Animal';
+
+    /**
+     * @var string $primaryKey, clé primaire de la table
+     */
     protected static $primaryKey = 'idAnimal';
+
+    /**
+     * @var array $allowedFields, Champs modifiables dans la ta table
+     */
     protected $allowedFields = array('idAnimal', 'nom', 'age', 'type', 'race', 'ville', 'photo', 'description', 'idCompte');
 
+    /**
+     * @var string $pivotTable, table pivot permettant de lier les Animaux avec les Comptes
+     */
     public $pivotTable = 'MatchAC';
 
+    /**
+     * Retourne l'animal si il existe
+     *
+     * @param $id
+     * @return bool|mixed|null
+     */
     public static function exists($id)
     {
         $id = static::$_adapter->quoteValue($id);
@@ -30,6 +54,12 @@ class Animal extends AbstractModel
         return false;
     }
 
+    /**
+     * Créé une relation entre l'animal courant et un Compte (enregistre le match)
+     *
+     * @param $idUser
+     * @return bool
+     */
     public function linkWith($idUser)
     {
         $idAnimal = static::$_adapter->quoteValue($this->idAnimal);
@@ -56,6 +86,12 @@ class Animal extends AbstractModel
         return false;
     }
 
+    /**
+     * Vérifie si l'animal courant a déjà matché avec $idUser
+     *
+     * @param $idUser
+     * @return bool
+     */
     public function isMatched($idUser)
     {
         $idAnimal = static::$_adapter->quoteValue($this->idAnimal);
@@ -67,6 +103,12 @@ class Animal extends AbstractModel
         return $alreadyExists === 0 ? false : true;
     }
 
+    /**
+     * Récupère le dernier animal ajouté sucpetible d'être matché
+     *
+     * @param $idUser
+     * @return bool|mixed
+     */
     public static function findLatest($idUser)
     {
         $idCompte = static::$_adapter->quoteValue($idUser);
@@ -92,6 +134,14 @@ class Animal extends AbstractModel
         return false;
     }
 
+    /**
+     * Cherche l'animal précédent pouvant être matché
+     *
+     * @param $idAnimal
+     * @param $idUser
+     * @param $maxPk
+     * @return bool|mixed
+     */
     public static function findPrevious($idAnimal, $idUser, $maxPk)
     {
         $idUser = static::$_adapter->quoteValue($idUser);
@@ -112,6 +162,14 @@ class Animal extends AbstractModel
         return $res;
     }
 
+    /**
+     * Cherche l'animal suivant pouvant être matché
+     *
+     * @param $idAnimal
+     * @param $idUser
+     * @param $minPk
+     * @return bool|mixed
+     */
     public static function findNext($idAnimal, $idUser, $minPk)
     {
         $idUser = static::$_adapter->quoteValue($idUser);
@@ -132,11 +190,21 @@ class Animal extends AbstractModel
         return $res;
     }
 
+    /**
+     * Retourne les Comptes ayant matché avec cet animal
+     *
+     * @return null|\Pure\ORM\Classes\EntityCollection
+     */
     public function matchedAccounts()
     {
         return $this->belongsToMany('App\Models\Compte', 'MatchAC', 'idAnimal', 'idCompte');
     }
 
+    /**
+     * Retourne le Compte propriétaire de l'animal
+     *
+     * @return mixed|null
+     */
     public function getCompte()
     {
         return $this->belongsTo('App\Models\Compte', 'idCompte', 'idCompte');

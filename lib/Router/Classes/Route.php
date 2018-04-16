@@ -17,9 +17,26 @@ use Pure\Router\Exceptions\RouterException;
  */
 class Route
 {
+    /**
+     * Middleware classes instances
+     *
+     * @var array
+     */
     private $middlewareLayers = array();
+
+    /**
+     * Position in the layer
+     *
+     * @var int
+     */
     private $middlewareIndex = 0;
 
+    /**
+     * Add a middleware to the route
+     *
+     * @param $middleware
+     * @return $this
+     */
     public function withMiddleWare($middleware)
     {
         $this->middlewareLayers[] = $middleware;
@@ -27,6 +44,11 @@ class Route
         return $this;
     }
 
+    /**
+     * Return the current middleware, if any
+     *
+     * @return mixed|null
+     */
     private function getMiddleware()
     {
         if (isset($this->middlewareLayers[$this->middlewareIndex])) {
@@ -124,12 +146,13 @@ class Route
         $middleware = $this->getMiddleware();
         $this->middlewareIndex++;
 
+        // no more middleware
         if (null === $middleware) {
             $callable = null;
 
             if (is_callable($this->callable)) {
                 $callable = $this->callable;
-            } elseif (is_string($this->callable)) {
+            } elseif (is_string($this->callable)) { // a string with th format : 'className:functionName'
                 $exploded = explode(':', $this->callable);
 
                 if (class_exists($exploded[0])) {
@@ -143,14 +166,14 @@ class Route
             }
 
             if (null === $callable) {
-                throw new RouterException('Callback function is not callable');
+                throw new RouterException('The given callback is not callable');
             }
 
             return call_user_func_array($callable, $this->match_params);
-        } else {
-            return $middleware([$this, 'call']);
         }
 
+        // call middleware
+        return $middleware([$this, 'call']);
     }
 
     /**

@@ -11,6 +11,10 @@ namespace Pure\Controllers\Classes;
 use Pure\Router\Classes\Router;
 use Pure\TemplateEngine\Classes\Pure_Templates_Environment;
 
+/**
+ * Class BaseController
+ * @package Pure\Controllers\Classes
+ */
 class BaseController
 {
     /**
@@ -57,6 +61,11 @@ class BaseController
         exit();
     }
 
+    /**
+     * Redirect to $url
+     *
+     * @param $url
+     */
     public function redirect($url)
     {
         header('Location: ' . $url);

@@ -9,12 +9,31 @@ namespace App\Models;
 
 use Pure\ORM\AbstractClasses\AbstractModel;
 
+/**
+ * Class Compte
+ * @package App\Models
+ */
 class Compte extends AbstractModel
 {
+    /**
+     * @var string $table, table dans la BDD
+     */
     protected static $table = 'Compte';
+
+    /**
+     * @var string $primaryKey, clé primaire
+     */
     protected static $primaryKey = 'idCompte';
+
+    /**
+     * @var array $allowedFields, champs modifiables
+     */
     protected $allowedFields = array('idCompte', 'email', 'password', 'login');
 
+    /**
+     * @param $login
+     * @return bool|mixed|null
+     */
     public static function getByLogin($login)
     {
         $login = static::$_adapter->quoteValue($login);
@@ -28,6 +47,10 @@ class Compte extends AbstractModel
         return false;
     }
 
+    /**
+     * @param $id
+     * @return bool|mixed|null
+     */
     public static function getById($id)
     {
         $id = static::$_adapter->quoteValue($id);
@@ -41,6 +64,10 @@ class Compte extends AbstractModel
         return false;
     }
 
+    /**
+     * @param $email
+     * @return bool
+     */
     public function updateEmail($email)
     {
         $emailS = static::$_adapter->quoteValue($email);
@@ -55,11 +82,21 @@ class Compte extends AbstractModel
         return false;
     }
 
+    /**
+     * Récupère les animaux appartenant au compte courant
+     *
+     * @return \Pure\ORM\Classes\EntityCollection
+     */
     public function getAnimals()
     {
         return $this->hasMany('App\Models\Animal', 'idCompte', 'idCompte');
     }
 
+    /**
+     * Récupère les animaux matchés
+     *
+     * @return null|\Pure\ORM\Classes\EntityCollection
+     */
     public function matchedAnimals()
     {
         return $this->belongsToMany('App\Models\Animal', 'MatchAC', 'idCompte', 'idAnimal');

@@ -7,7 +7,10 @@
 
 namespace Pure\Router\Exceptions;
 
-
+/**
+ * Class RouterException
+ * @package Pure\Router\Exceptions
+ */
 class RouterException extends \Exception
 {
 

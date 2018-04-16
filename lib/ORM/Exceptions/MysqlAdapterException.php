@@ -7,7 +7,10 @@
 
 namespace Pure\ORM\Exceptions;
 
-
+/**
+ * Class MysqlAdapterException
+ * @package Pure\ORM\Exceptions
+ */
 class MysqlAdapterException extends \Exception
 {
 

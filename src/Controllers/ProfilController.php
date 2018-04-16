@@ -11,6 +11,10 @@ use App\Models\Animal;
 use App\Models\Compte;
 use Pure\Controllers\Classes\BaseController;
 
+/**
+ * Class ProfilController
+ * @package App\Controllers
+ */
 class ProfilController extends BaseController
 {
     /**
@@ -369,7 +373,7 @@ class ProfilController extends BaseController
     }
 
     /**
-     * supprime un animal
+     * Supprime un animal
      *
      * @param $id
      */
@@ -407,6 +411,9 @@ class ProfilController extends BaseController
         $this->redirect($this->getRouter()->url('editAnimauxGET'));
     }
 
+    /**
+     * Affiche la liste des matchs du compte
+     */
     public function listMatchs()
     {
         $errors = [];
